@@ -10,6 +10,8 @@ interface Todo {
 
 
 function App() {
+
+  //test用
   const [todoList,setTodoList] = useState<Todo[]>([])
   
 const fetchTodo = async () => {
@@ -22,6 +24,7 @@ useEffect(() => {
 },[])
 
 console.log(todoList)
+//
 
   return (
    <>
