@@ -25,7 +25,7 @@ console.log(todoList)
 
   return (
    <>
-   <p className='text-blue-300'>Hello</p>
+   <p className='text-red-300'>Hello</p>
    <button className="btn btn-neutral">Neutral</button>
   </>
   );
