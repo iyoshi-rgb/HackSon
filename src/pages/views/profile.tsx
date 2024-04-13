@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getProfile, getUser } from "../../utils/supabasefunction";
+import { getProfile, getUser } from "../../utils/login";
 
 interface Profile {
   userId: string;

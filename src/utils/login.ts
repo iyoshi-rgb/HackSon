@@ -1,12 +1,6 @@
 import { supabase } from "./supabase";
 import { createChatRoom } from "./makeroom";
 
-//テスト用
-export const fetchTest = async () => {
-  const item = await supabase.from("test").select("*");
-  return item.data;
-};
-
 export async function CreateChatRoomFunc(
   userID: string,
   title: string,
