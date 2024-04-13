@@ -19,7 +19,7 @@ export const Roomlist = () => {
       const user = await getUser();
       if (user?.userId) {
         const location = await getLocation(user.userId);
-        if (location) {
+        if (location && location.length > 0 && location[0].Location) {
           setUserLocation(location[0].Location);
         }
       }
