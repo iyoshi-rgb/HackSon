@@ -1,11 +1,6 @@
 import { supabase } from "./supabase";
 import { createChatRoom } from "./makeroom";
 
-//テスト用
-export const fetchTest = async () => {
-  const item = await supabase.from("test").select("*");
-  return item.data;
-};
 
 
 export async function CreateChatRoomFunc(
@@ -31,7 +26,6 @@ export async function CreateChatRoomFunc(
   console.log("Created Room:", createRoomData);
 }
 
-
 export async function handleSocialLogin(provider: any) {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider,
@@ -47,14 +41,7 @@ export async function handleSocialLogin(provider: any) {
       console.log(error);
       return;
     }else{
-        console.log(data)
-    }
-  }
+        console.log('success');
 
-  export async function getUser() {
-    const { data: { user } } = await supabase.auth.getUser()
-    
-    if(user){
-      return user.id
     }
   }

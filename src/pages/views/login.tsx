@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { GoogleButton } from "../../components/GoogleButton";
-import { handleSocialLogin, getUser } from "../../utils/login";
+import { handleSocialLogin } from "../../utils/login";
+import { getUser } from "../../utils/user";
 import { Top } from "../../layouts/login/top";
 import LoadingAndRedirect from "../../layouts/login/Modal";
 import Accordion from "../../layouts/login/Accordion";
 
 export const Login = () => {
-  const [userId, setUserId] = useState<string | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchUser() {
-      const userId = await getUser();
-      if (userId) {
-        setUserId(userId);
+      const user = await getUser();
+      if (user) {
+        setIsLoggedIn(!isLoggedIn);
       }
     }
 
     fetchUser();
   }, []);
 
-  console.log("userID:", userId);
+  console.log(isLoggedIn);
 
   return (
     <div className="text-center">
-      {userId ? ( // userId が存在する場合のみ以下の要素を表示
+      {isLoggedIn ? (
         <>
           <LoadingAndRedirect />
         </>
       ) : (
-        // userId が存在しない場合は以下の要素を表示
         <>
           <div className="mt-10">
             <Top />
