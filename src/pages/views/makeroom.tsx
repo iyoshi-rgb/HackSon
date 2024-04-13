@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
+import { CreateChatRoomFunc } from "../../utils/supabasefunction";
 
-const makeroom = () => {
+export const Makeroom = () => {
   return (
-    <div>makeroom</div>
-  )
-}
-
-export default makeroom
+    <>
+      <div>makeroom</div>
+      <button onClick={CreateChatRoomFunc}> ダミーデータを作成する</button>
+    </>
+  );
+};
