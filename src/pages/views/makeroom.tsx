@@ -70,16 +70,7 @@ export const Makeroom = () => {
             className="input input-bordered w-full"
           />
         </div>
-        <div className="mb-4">
-          <select
-            value={chatRoomType}
-            onChange={(e) => setChatRoomType(e.target.value)}
-            className="select select-bordered w-full"
-          >
-            <option value="group">グループ</option>
-            <option value="personal">個人</option>
-          </select>
-        </div>
+
         <div className="mb-4">
           <select
             value={location}
