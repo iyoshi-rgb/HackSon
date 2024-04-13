@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { getUser } from "../../utils/user";
 import { getProfile } from "../../utils/login";
@@ -23,6 +24,7 @@ export const Profile = () => {
     await Logout();
     navigate("/");
   };
+
   useEffect(() => {
     async function fetchData() {
       const userData = await getUser(); // getUserName の戻り値を直接分割代入しない
@@ -79,6 +81,7 @@ export const Profile = () => {
           </div>
         </div>
       </div>
+
     </div>
   );
 };

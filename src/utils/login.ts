@@ -1,4 +1,5 @@
 import { supabase } from "./supabase";
+
 import { createChatRoom } from "./makeroom";
 
 export async function CreateChatRoomFunc(
@@ -18,6 +19,7 @@ export async function CreateChatRoomFunc(
   console.log("Created Room:", createRoomData);
 }
 
+
 export async function handleSocialLogin(provider: any) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
@@ -33,6 +35,7 @@ export async function handleSocialLogin(provider: any) {
     console.log(error);
     return;
   } else {
+
     console.log(data);
   }
 }
@@ -58,4 +61,5 @@ export async function getProfile(userId: string) {
     return null;
   }
   return profile;
+
 }
