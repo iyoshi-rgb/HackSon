@@ -1,9 +1,10 @@
-
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getUser } from "../../utils/user";
 import { getProfile } from "../../utils/login";
 import { Logout } from "../../utils/logout";
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../hooks/UserProvider";
+import { LocationContext } from "../../hooks/LocationProvider";
 
 interface Profile {
   userId: string;
@@ -17,6 +18,9 @@ interface Profile {
 export const Profile = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [userName, setUserName] = useState<string>("");
+
+  const { user } = useContext(UserContext);
+  const { location, setLocation } = useContext(LocationContext);
 
   const navigate = useNavigate();
 
@@ -54,7 +58,11 @@ export const Profile = () => {
           Logout
         </button>
         <div className="flex justify-center w-4/5">
-          <img className="mt-3 h-10 w-10 mr-4 rounded-full" src={profile?.userImage || "default.png"} alt="画像" />
+          <img
+            className="mt-3 h-10 w-10 mr-4 rounded-full"
+            src={profile?.userImage || "default.png"}
+            alt="画像"
+          />
           <div className="flex flex-col">
             <div className="text-xl font-medium">{userName}</div>
             <div>
@@ -81,7 +89,6 @@ export const Profile = () => {
           </div>
         </div>
       </div>
-
     </div>
   );
 };
