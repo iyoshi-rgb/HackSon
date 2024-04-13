@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getMessage, makemessage } from "../../utils/makemessage";
+import { UserContext } from "../../hooks/UserProvider";
 
 export const Chat = () => {
   /*props_**は親コンポーネントから受け渡しでお願いします。 */
