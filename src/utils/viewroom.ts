@@ -8,6 +8,7 @@ export const getChatRoomIds = async (userID: string) => {
     .eq("UserID", userID)
     .select();
 
+  console.log("getChatRoomIds", data);
   if (error) {
     console.error("Error fetching ChatRoomID", error);
     return null;
@@ -19,7 +20,10 @@ export const getMyChatRooms = async (userID: string) => {
   const { data, error } = await supabase
     .from("ChatRooms")
     .select("*")
-    .eq("UserID", userID);
+    .eq("UserID", userID)
+    .select();
+
+  console.log("getMyChatRooms", data);
 
   if (error) {
     console.error("Error fetching chat rooms by UserID", error);
@@ -32,8 +36,10 @@ export const getChatRoomsByLocation = async (location: string) => {
   const { data, error } = await supabase
     .from("ChatRooms")
     .select("*")
-    .eq("Location", location);
+    .eq("Location", location)
+    .select();
 
+  console.log("getChatRoomsByLocation", data);
   if (error) {
     console.error("Error fetching chat rooms by location", error);
     return null;
