@@ -9,12 +9,14 @@ import { Signup } from './pages/views/signup';
 import { Roomlist } from './pages/views/roomlist';
 import { Profile } from './pages/views/profile';
 import { Chat } from './pages/views/chat';
+import Header from './components/Header';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
+    <Header></Header>
     <Router>
     <Routes>
       <Route path='/' element={<App/>}/>
