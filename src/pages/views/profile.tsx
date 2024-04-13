@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getUserName } from "../../utils/user";
 import { getProfile, getUser } from "../../utils/login";
 
 interface Profile {
@@ -12,30 +13,36 @@ interface Profile {
 
 export const Profile = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
-  // const userName = getUser();
+  const [userName, setUserName] = useState<string>("");
   useEffect(() => {
-    async function fetchProfile() {
-      const userId = await getUser();
-      if (userId !== "No User") {
-        const profileData = await getProfile(userId);
-        setProfile(profileData);
+    async function fetchData() {
+      const userData = await getUserName(); // getUserName の戻り値を直接分割代入しない
+
+      if (userData) {
+        // userDataがundefinedまたはnullでないことを確認
+        const { userId, userName } = userData; // ここで分割代入
+        if (userId) {
+          const profileData = await getProfile(userId);
+          setProfile(profileData);
+          setUserName(userName || ""); // userNameがundefinedの場合はデフォルトで空文字列を設定
+        }
       } else {
         console.log("ユーザーがログインしていません");
       }
     }
-    fetchProfile();
-  });
+    fetchData();
+  }, []);
 
   // プロフィール情報の読み込み中または未取得の場合
   // if (!profile) return <div>Loading...</div>;
 
   return (
     <div className="">
-      <div className="w-full h-24 bg-slate-400">
+      <div className="w-full h-24 bg-slate-400 flex">
         <div className="flex justify-center w-4/5">
           <img className="mt-3 h-10 w-10 mr-4 rounded-full" src={profile?.userImage || "default.png"} alt="画像" />
           <div className="flex flex-col">
-            {/* <div className="text-xl font-medium">{userName}</div> */}
+            <div className="text-xl font-medium">{userName}</div>
             <div>
               <div>{profile?.location || "未設定"}</div>
 
@@ -43,6 +50,7 @@ export const Profile = () => {
               {/* <div>{profile.likes}</div> */}
             </div>
           </div>
+          <button className="mt-2 mx-4  btn btn-active">編集する</button>
         </div>
       </div>
 
