@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { GoogleButton } from "../components/GoogleButton";
 import { handleSocialLogin } from "../utils/login";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
@@ -34,12 +35,12 @@ export const Header = () => {
             >
               Home
             </a>
-            <a
-              href="#"
+            <Link
+              to={"/chat"}
               className="inline-flex items-center gap-1 text-lg font-semibold hover:text-indigo-500 active:text-indigo-700"
             >
               Chat
-            </a>
+            </Link>
             <a
               href="#"
               className="text-lg font-semibold text-gray-600 transition duration-100 hover:text-indigo-500 active:text-indigo-700"

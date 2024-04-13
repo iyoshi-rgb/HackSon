@@ -1,55 +1,56 @@
-import React, { useEffect, useState } from "react";
-import { getMessage, makemessage } from "../../utils/makemessage";
+import React, { useContext, useEffect, useState } from "react";
+import { supabase } from "../../utils/supabase";
+import { UserContext } from "../../hooks/UserProvider";
 
 export const Chat = () => {
-  /*props_**は親コンポーネントから受け渡しでお願いします。 */
-  const props_ChatRoomID = 1;
-  const props_UserID = "1";
-  const [messageToSend, setMessageToSend] = useState<string>("");
-  const [message, setMessage] = useState<any>([]);
+  const [content, setContent] = useState("");
+  const { user } = useContext(UserContext);
+  const [messages, setMessages] = useState<any>([]);
 
-  useEffect(()  => {
-    async function fechtchat(){
-      const data = await getMessage(props_ChatRoomID);
-      setMessage(data)
-      
-      console.log("user:",message)
-      
-    } 
-    fechtchat();
+  const handleSend = async () => {
+    const { data, error } = await supabase.from("Messages").insert([
+      {
+        sender_id: "7b01d1da-9d68-4dbb-8108-70802d0992cc",
+        receiver_id: user.id,
+        content: content,
+      },
+    ]);
 
-
-  }, []);
-
-  const handleSendMessage = async (e:any) => {
-    e.preventDefault(); // フォームのデフォルト送信動作を防止
-    const message = e.target.elements.messageInput.value; // inputのname属性を使用して値にアクセス
-    console.log(message); // ここでメッセージを処理（例えばサーバーに送信）
-
-    await makemessage(props_UserID,message,props_ChatRoomID);
-    const data = await getMessage(props_ChatRoomID);
-    setMessage(data)
-    console.log("message",message);
-
-    
+    if (error) console.log("Error sending message:", error);
+    else {
+      console.log("Message sent:", data);
+      setContent("");
+    }
   };
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      const { data, error } = await supabase
+        .from("Messages")
+        .select("*")
+        .eq("receiver_id", user.id);
+
+      if (error) console.log("Error fetching messages:", error);
+      else setMessages(data);
+    };
+
+    fetchMessages();
+  }, []);
 
   return (
     <div>
-      <ul>
-        {message.map((mes : any, index:number) => (
-          <li key={index}>{mes.Message}</li>
+      <div>
+        {user.id}
+        {user.name}
+        {messages.map((msg: any, idx: any) => (
+          <div key={idx}>
+            <strong>From: {msg.sender_id}</strong>
+            <p>{msg.content}</p>
+          </div>
         ))}
-      </ul>
-      <form onSubmit={handleSendMessage}>
-      <input
-        type="text"
-        name="messageInput"
-        value={messageToSend}
-        onChange={(e) => setMessageToSend(e.target.value)}
-      />
-      <button type="submit">送信</button>
-    </form>
+      </div>
+      <textarea value={content} onChange={(e) => setContent(e.target.value)} />
+      <button onClick={handleSend}>Send</button>
     </div>
   );
 };
