@@ -53,6 +53,8 @@ export const Profile = () => {
 
   return (
     <div className="">
+      {user.id}
+      {user.name}
       <div className="w-full h-24 bg-slate-400 flex">
         <button onClick={handleLogout} className="btn btn-neutral">
           Logout

@@ -1,55 +1,83 @@
-import React, { useEffect, useState } from "react";
-import { getMessage, makemessage } from "../../utils/makemessage";
+import React, { useContext, useEffect, useState, FormEvent } from "react";
+import { UserContext } from "../../hooks/UserProvider";
+import {
+  getPostMessages,
+  postMessage,
+  getSendMessages,
+} from "../../utils/chat";
+
+interface Message {
+  sender_id: string;
+  content: string;
+  type: "sent" | "received"; // 送信されたメッセージか受信したメッセージかを区別するためのタイプ
+}
 
 export const Chat = () => {
-  /*props_**は親コンポーネントから受け渡しでお願いします。 */
-  const props_ChatRoomID = 1;
-  const props_UserID = "1";
-  const [messageToSend, setMessageToSend] = useState<string>("");
-  const [message, setMessage] = useState<any>([]);
+  const [content, setContent] = useState<string>("");
+  const { user } = useContext(UserContext);
+  const [messages, setMessages] = useState<Message[]>([]);
 
-  useEffect(()  => {
-    async function fechtchat(){
-      const data = await getMessage(props_ChatRoomID);
-      setMessage(data)
-      
-      console.log("user:",message)
-      
-    } 
-    fechtchat();
+  const handleSend = async (e: FormEvent) => {
+    e.preventDefault();
+    if (content.trim() === "") return;
 
-
-  }, []);
-
-  const handleSendMessage = async (e:any) => {
-    e.preventDefault(); // フォームのデフォルト送信動作を防止
-    const message = e.target.elements.messageInput.value; // inputのname属性を使用して値にアクセス
-    console.log(message); // ここでメッセージを処理（例えばサーバーに送信）
-
-    await makemessage(props_UserID,message,props_ChatRoomID);
-    const data = await getMessage(props_ChatRoomID);
-    setMessage(data)
-    console.log("message",message);
-
-    
+    await postMessage({
+      receiver_id: "7b01d1da-9d68-4dbb-8108-70802d0992cc",
+      sender_id: user.id,
+      content,
+    });
+    setContent("");
+    refreshMessages(); // 新しいメッセージを送信した後、メッセージリストを更新します
   };
 
+  const refreshMessages = async () => {
+    if (user.id) {
+      const sentData = await getPostMessages({ user_id: user.id });
+      const receivedData = await getSendMessages({ user_id: user.id });
+
+      const formattedSent = sentData
+        ? sentData.map((msg) => ({ ...msg, type: "sent" }))
+        : [];
+      const formattedReceived = receivedData
+        ? receivedData.map((msg) => ({ ...msg, type: "received" }))
+        : [];
+
+      const allMessages = [
+        ...formattedSent,
+        ...formattedReceived,
+      ].sort(/* ここでタイムスタンプに基づいてソートするロジックが必要 */);
+      setMessages(allMessages);
+    }
+  };
+
+  useEffect(() => {
+    refreshMessages();
+  }, [user.id]); // user.idが変更された場合にのみ再読み込み
+
   return (
-    <div>
-      <ul>
-        {message.map((mes : any, index:number) => (
-          <li key={index}>{mes.Message}</li>
+    <div className="text-center">
+      <div className="flex flex-col items-center w-full">
+        {messages.map((msg, idx) => (
+          <div
+            key={idx}
+            className={`chat ${
+              msg.type === "sent" ? "chat-start" : "chat-end"
+            } w-4/5 my-2`}
+          >
+            <div className="chat-bubble">{msg.content}</div>
+          </div>
         ))}
-      </ul>
-      <form onSubmit={handleSendMessage}>
-      <input
-        type="text"
-        name="messageInput"
-        value={messageToSend}
-        onChange={(e) => setMessageToSend(e.target.value)}
-      />
-      <button type="submit">送信</button>
-    </form>
+      </div>
+      <form onSubmit={handleSend} className="mt-4">
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          className="textarea textarea-bordered textarea-lg w-full max-w-xs"
+        ></textarea>
+        <button className="btn btn-neutral mt-2" type="submit">
+          Send
+        </button>
+      </form>
     </div>
   );
 };
