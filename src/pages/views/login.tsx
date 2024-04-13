@@ -11,7 +11,7 @@ import { UserContext } from "../../hooks/UserProvider";
 import { LocationContext } from "../../hooks/LocationProvider";
 
 export const Login = () => {
-  const { setUser }: any = useContext(UserContext);
+  const { user, setUser }: any = useContext(UserContext);
   const { setLocation }: any = useContext(LocationContext);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
