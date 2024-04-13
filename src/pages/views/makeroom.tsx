@@ -1,16 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreateChatRoomFunc } from "../../utils/supabasefunction";
+import { getUser } from "../../utils/supabasefunction";
 
 export const Makeroom = () => {
+  const [userId, setUserId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [about, setAbout] = useState("");
   const [chatRoomType, setChatRoomType] = useState("group");
   const [location, setLocation] = useState("");
 
+  useEffect(() => {
+    async function fetchUser() {
+      const userId = await getUser();
+      setUserId(userId);
+    }
+
+    fetchUser();
+  }, []);
+
   const handleCreateRoom = () => {
-    CreateChatRoomFunc(userID, title, about, chatRoomType, location);
+    console.log(userId, title, about, chatRoomType, location);
+    CreateChatRoomFunc(userId, title, about, chatRoomType, location);
   };
-  const userID = "1";
+
+  console.log(userId);
+
   return (
     <>
       <div>makeroom</div>
