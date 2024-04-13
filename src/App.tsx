@@ -29,7 +29,7 @@ console.log(todoList)
   return (
    <>
    <p className='text-red-300'>Hello</p>
-   <button className="btn btn-neutral">Neutral</button>
+
   </>
   );
 }
