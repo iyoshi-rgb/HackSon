@@ -18,8 +18,9 @@ export const Makeroom = () => {
     async function fetchUser() {
       const userData = await getUser();
       if (userData) {
-        const userID = userData.userId;
-        setUserId(userID);
+        setUserId(userData.userId); // userが存在する場合、userIdを設定
+      } else {
+        setUserId(null); // userがnullの場合、userIdをnullに設定
       }
     }
 
@@ -27,21 +28,26 @@ export const Makeroom = () => {
   }, []);
 
   const handleCreateRoom = async () => {
-    if (userID) {
+    console.log(userId, title, about, chatRoomType, location);
+    createRoomData = await createChatRoom(
+      userId,
+      title,
+      about,
+      chatRoomType,
+      location
+    );
+    setTitle("");
+    setAbout("");
+    setChatRoomType("group");
+    setLocation("");
+    console.log(createRoomData);
+    if (createRoomData && createRoomData.length > 0) {
+      const ChatRoomID = createRoomData[0].ChatRoomID;
+      // 作成したルームに遷移
+      navigate(`/room?ChatRoomID=${ChatRoomID}`);
+    } else {
+      console.error("No data returned or room creation failed");
 
-      createRoomData = await createChatRoom(userID, title, about, chatRoomType, location);
-
-      setTitle("");
-      setAbout("");
-      setChatRoomType("group");
-      setLocation("");
-      console.log(createRoomData);
-      if (createRoomData && createRoomData.length > 0) {
-        const ChatRoomID = createRoomData[0].ChatRoomID;
-        navigate(`/room?ChatRoomID=${ChatRoomID}`);
-      } else {
-        console.error("No data returned or room creation failed");
-      }
     }
   };
 
