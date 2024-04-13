@@ -1,4 +1,4 @@
-import { CreateChatRoomFunc } from "../../utils/login";
+
 import { useEffect, useState } from "react";
 import { createChatRoom } from "../../utils/makeroom";
 import { getUser } from "../../utils/user";
@@ -28,7 +28,9 @@ export const Makeroom = () => {
 
   const handleCreateRoom = async () => {
     if (userID) {
+
       createRoomData = await createChatRoom(userID, title, about, chatRoomType, location);
+
       setTitle("");
       setAbout("");
       setChatRoomType("group");
