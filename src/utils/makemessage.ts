@@ -25,12 +25,12 @@ export const makemessage = async (
   return data;
 };
 
-export const getMessage = async () => {
+export const getMessage = async (id:number) => {
     const messages = (
       await supabase
         .from("Messages")
         .select("*")
-        .eq("ChatRoomID",1)
+        .eq("ChatRoomID",id)
     )
     return messages.data;
   };

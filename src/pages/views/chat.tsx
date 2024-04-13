@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { supabase } from "../../utils/supabase";
 import { getMessage, makemessage } from "../../utils/makemessage";
 
-interface Messages {
-  UserID: string;
-  Message: string;
-  MessageID: number;
-  ChatRoomID: number;
-  Timestamp: Date;
-}
-
 export const Chat = () => {
+  /*props_**は親コンポーネントから受け渡しでお願いします。 */
   const props_ChatRoomID = 1;
   const props_UserID = "1";
   const [messageToSend, setMessageToSend] = useState<string>("");
@@ -18,7 +10,7 @@ export const Chat = () => {
 
   useEffect(()  => {
     async function fechtchat(){
-      const data = await getMessage();
+      const data = await getMessage(props_ChatRoomID);
       setMessage(data)
       
       console.log("user:",message)
@@ -35,7 +27,7 @@ export const Chat = () => {
     console.log(message); // ここでメッセージを処理（例えばサーバーに送信）
 
     await makemessage(props_UserID,message,props_ChatRoomID);
-    const data = await getMessage();
+    const data = await getMessage(props_ChatRoomID);
     setMessage(data)
     console.log("message",message);
 
