@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { createChatRoom } from "../../utils/makeroom";
 import { getUser } from "../../utils/user";
@@ -30,7 +29,7 @@ export const Makeroom = () => {
   const handleCreateRoom = async () => {
     // console.log(userId, title, about, chatRoomType, location);
     createRoomData = await createChatRoom(
-      userId,
+      userID,
       title,
       about,
       chatRoomType,
@@ -47,7 +46,6 @@ export const Makeroom = () => {
       navigate(`/room?ChatRoomID=${ChatRoomID}`);
     } else {
       console.error("No data returned or room creation failed");
-
     }
   };
 
@@ -55,13 +53,31 @@ export const Makeroom = () => {
     <>
       <div>makeroom</div>
       <form>
-        <input type="text" placeholder="部屋のタイトル" value={title} onChange={(e) => setTitle(e.target.value)} />
-        <input type="text" placeholder="概要" value={about} onChange={(e) => setAbout(e.target.value)} />
-        <select value={chatRoomType} onChange={(e) => setChatRoomType(e.target.value)}>
+        <input
+          type="text"
+          placeholder="部屋のタイトル"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <input
+          type="text"
+          placeholder="概要"
+          value={about}
+          onChange={(e) => setAbout(e.target.value)}
+        />
+        <select
+          value={chatRoomType}
+          onChange={(e) => setChatRoomType(e.target.value)}
+        >
           <option value="group">グループ</option>
           <option value="personal">個人</option>
         </select>
-        <input type="text" placeholder="地元" value={location} onChange={(e) => setLocation(e.target.value)} />
+        <input
+          type="text"
+          placeholder="地元"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+        />
         <button type="button" onClick={handleCreateRoom}>
           ダミーデータを作成する
         </button>
