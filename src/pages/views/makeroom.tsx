@@ -1,16 +1,53 @@
-import { useState } from "react";
-import { CreateChatRoomFunc } from "../../utils/login";
+import { useEffect, useState } from "react";
+import { createChatRoom } from "../../utils/makeroom";
+import { getUser } from "../../utils/user";
+import { useNavigate } from "react-router-dom";
 
 export const Makeroom = () => {
+  const navigate = useNavigate();
+  let createRoomData: any;
+
+  const [userID, setUserId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [about, setAbout] = useState("");
   const [chatRoomType, setChatRoomType] = useState("group");
   const [location, setLocation] = useState("");
 
-  const handleCreateRoom = () => {
-    CreateChatRoomFunc(userID, title, about, chatRoomType, location);
+  useEffect(() => {
+    async function fetchUser() {
+      const userData = await getUser();
+      if (userData) {
+        const userID = userData.userId;
+        setUserId(userID);
+      }
+    }
+
+    fetchUser();
+  }, []);
+
+  const handleCreateRoom = async () => {
+    if (userID) {
+      createRoomData = await createChatRoom(
+        userID,
+        title,
+        about,
+        chatRoomType,
+        location
+      );
+      setTitle("");
+      setAbout("");
+      setChatRoomType("group");
+      setLocation("");
+      console.log(createRoomData);
+      if (createRoomData && createRoomData.length > 0) {
+        const ChatRoomID = createRoomData[0].ChatRoomID;
+        navigate(`/room?ChatRoomID=${ChatRoomID}`);
+      } else {
+        console.error("No data returned or room creation failed");
+      }
+    }
   };
-  const userID = "1";
+
   return (
     <>
       <div>makeroom</div>
