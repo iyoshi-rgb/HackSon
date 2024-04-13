@@ -27,7 +27,6 @@ export const Makeroom = () => {
   }, []);
 
   const handleCreateRoom = async () => {
-    // console.log(userId, title, about, chatRoomType, location);
     createRoomData = await createChatRoom(
       userId,
       title,
