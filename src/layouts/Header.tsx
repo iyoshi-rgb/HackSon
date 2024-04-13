@@ -1,17 +1,26 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { GoogleButton } from "../components/GoogleButton";
 import { handleSocialLogin } from "../utils/login";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../hooks/AuthProvider";
+import { Logout } from "../utils/logout";
 
 export const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  // useContext から isLoggedIn と setIsLoggedIn を正しく取得
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+  // ログアウト処理
+  const handleLogout = async () => {
+    await Logout();
+    setIsLoggedIn(false); // ログイン状態をfalseに設定
+  };
 
   return (
-    <div className="bg-white ">
-      <div className="mx-auto max-w-screen-2xl ">
+    <div className="bg-white">
+      <div className="mx-auto max-w-screen-2xl">
         <header className="flex items-center justify-between py-4">
           <Link
-            to={"/"}
+            to="/"
             className="inline-flex items-center gap-2.5 text-2xl font-bold text-black md:text-3xl"
             aria-label="logo"
           >
@@ -31,14 +40,13 @@ export const Header = () => {
           <div className="flex flex-1 items-center justify-center hidden lg:flex">
             <nav className="flex justify-center gap-12">
               <Link
-                to={"/"}
+                to="/"
                 className="inline-flex items-center gap-1 text-lg font-semibold hover:text-indigo-500 active:text-indigo-700"
               >
                 Home
               </Link>
-
               <Link
-                to={"/roomlist"}
+                to="/roomlist"
                 className="inline-flex items-center gap-1 text-lg font-semibold hover:text-indigo-500 active:text-indigo-700"
               >
                 部屋一覧
@@ -47,11 +55,21 @@ export const Header = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <GoogleButton handleClickMethod={handleSocialLogin} />
+            {isLoggedIn ? (
+              <button onClick={handleLogout} className="btn btn-neutral">
+                ログアウト
+              </button>
+            ) : (
+              <GoogleButton handleClickMethod={handleSocialLogin} />
+            )}
             {isLoggedIn && (
-              <Link to={"/profile"}>
-                <button className="inline-flex items-center gap-2 bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600">
-                  Profile
+              <Link to="/profile">
+                <button className="inline-flex items-center gap-2 text-white px-4 py-2 rounded-md ">
+                  <div className="avatar placeholder">
+                    <div className="bg-neutral text-neutral-content rounded-full w-20">
+                      <span className="">D</span>
+                    </div>
+                  </div>
                 </button>
               </Link>
             )}
@@ -70,9 +88,9 @@ export const Header = () => {
                   fill="currentColor"
                 >
                   <path
-                    fill-rule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4 a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clip-rule="evenodd"
+                    fillRule="evenodd"
+                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4 a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4 a1 1 0 01-1-1z"
+                    clipRule="evenodd"
                   />
                 </svg>
                 Menu
@@ -82,14 +100,14 @@ export const Header = () => {
               tabIndex={0}
               className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <Link to={"/"}>
+              <Link to="/">
                 <li>Home</li>
               </Link>
-              <Link to={"/roomlist"}>
+              <Link to="/roomlist">
                 <li>部屋一覧</li>
               </Link>
               {isLoggedIn && (
-                <Link to={"/profile"}>
+                <Link to="/profile">
                   <li>Profile</li>
                 </Link>
               )}
