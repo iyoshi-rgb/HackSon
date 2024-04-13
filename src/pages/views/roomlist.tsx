@@ -74,35 +74,81 @@ export const Roomlist = () => {
   console.log("chatRoomNames", chatRoomNames);
   return (
     <>
-      <div>Room List</div>
-      <h2>参加している募集部屋</h2>
-      <ul>
-        {chatRoomNames &&
-          chatRoomNames.map((chatRoomId) => (
-            <li key={chatRoomId}>
-              <button>{chatRoomId}</button>
+      <div className="text-3xl font-bold text-center my-1">Room List</div>
+      <h2 className="text-xl font-semibold text-center my-10">
+        参加している募集部屋
+      </h2>
+      <div className="flex justify-center my-5">
+        <ul className="space-y-4">
+          {chatRoomNames &&
+            chatRoomNames.map((chatRoomId) => (
+              <li key={chatRoomId}>
+                <div className="card w-96 bg-base-100 shadow-md rounded-lg">
+                  <div className="card-body">
+                    <h3 className="card-title text-base">
+                      <button
+                        onClick={() =>
+                          navigate(`/room?ChatRoomID=${chatRoomId}`)
+                        }
+                      >
+                        {chatRoomId}
+                      </button>
+                    </h3>
+                  </div>
+                </div>
+              </li>
+            ))}
+        </ul>
+      </div>
+      <h2 className="text-xl font-semibold text-center my-10">
+        自分が作成した部屋
+      </h2>
+      <div className="flex justify-center">
+        <ul className="space-y-4">
+          {myChatRooms.map((room) => (
+            <li key={room.ChatRoomID}>
+              <div className="card w-96 bg-base-100 shadow-md rounded-lg">
+                <div className="card-body">
+                  <h3
+                    className="card-title clickable text-base"
+                    onClick={() =>
+                      navigate(`/room?ChatRoomID=${room.ChatRoomID}`)
+                    }
+                  >
+                    {room.Title}
+                  </h3>
+                  <p className="text-xs">{room.About}</p>
+                </div>
+              </div>
             </li>
           ))}
-      </ul>
-      <h2>自分が作成した部屋</h2>
-      <ul>
-        {myChatRooms.map((room) => (
-          <li key={room.ChatRoomID}>
-            <button>{room.Title}</button>
-          </li>
-        ))}
-      </ul>
-      <h2>{userLocation}の部屋</h2>
-      <ul>
-        {chatRoomsByLocation.map((room) => (
-          <li key={room.ChatRoomID}>
-            <button>{room.Title}</button>
-            <button onClick={() => handleJoinRoom(room.ChatRoomID)}>
-              参加する
-            </button>
-          </li>
-        ))}
-      </ul>
+        </ul>
+      </div>
+      <h2 className="text-xl font-semibold text-center my-10">
+        {userLocation}の部屋
+      </h2>
+      <div className="flex justify-center">
+        <ul className="space-y-4">
+          {chatRoomsByLocation.map((room) => (
+            <li key={room.ChatRoomID}>
+              <div className="card w-96 bg-base-100 shadow-md rounded-lg">
+                <div className="card-body">
+                  <h3
+                    className="card-title clickable text-base"
+                    onClick={() => navigate(`/room/${room.ChatRoomID}`)}
+                  >
+                    {room.Title}
+                  </h3>
+                  <p className="text-xs">{room.About}</p>
+                  <button onClick={() => handleJoinRoom(room.ChatRoomID)}>
+                    参加する
+                  </button>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </>
   );
 };
