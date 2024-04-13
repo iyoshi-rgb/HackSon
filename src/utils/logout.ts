@@ -5,6 +5,6 @@ export const Logout = async () => {
     if (error) {
       return error
     } else {
-      return 'success';
+      return ;
     }
 }
