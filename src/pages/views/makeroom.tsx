@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { CreateChatRoomFunc } from "../../utils/supabasefunction";
 import { getUser } from "../../utils/supabasefunction";
+import { useNavigate } from "react-router-dom";
 
 export const Makeroom = () => {
+  const navigate = useNavigate();
+  let createRoomData: any;
+
   const [userId, setUserId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [about, setAbout] = useState("");
@@ -18,12 +22,28 @@ export const Makeroom = () => {
     fetchUser();
   }, []);
 
-  const handleCreateRoom = () => {
+  const handleCreateRoom = async () => {
     console.log(userId, title, about, chatRoomType, location);
-    CreateChatRoomFunc(userId, title, about, chatRoomType, location);
+    createRoomData = await CreateChatRoomFunc(
+      userId,
+      title,
+      about,
+      chatRoomType,
+      location
+    );
+    setTitle("");
+    setAbout("");
+    setChatRoomType("group");
+    setLocation("");
+    console.log(createRoomData);
+    if (createRoomData && createRoomData.length > 0) {
+      const ChatRoomID = createRoomData[0].ChatRoomID;
+      // 作成したルームに遷移
+      navigate(`/room?ChatRoomID=${ChatRoomID}`);
+    } else {
+      console.error("No data returned or room creation failed");
+    }
   };
-
-  console.log(userId);
 
   return (
     <>

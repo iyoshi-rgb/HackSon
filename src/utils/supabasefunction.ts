@@ -21,7 +21,7 @@ export async function CreateChatRoomFunc(
     chatRoomType,
     location
   );
-  console.log("Created Room:", createRoomData);
+  return createRoomData;
 }
 
 export async function handleSocialLogin(provider: any) {
