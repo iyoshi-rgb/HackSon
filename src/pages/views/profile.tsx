@@ -4,6 +4,8 @@ import Modal from "../../components/Modal";
 import { getUser } from "../../utils/user"; // Adjust imports based on actual paths
 import { UserContext } from "../../hooks/UserProvider";
 import { getProfile, updateProfile } from "../../utils/makeprofile";
+import { LocationContext } from "../../hooks/LocationProvider";
+import { AuthContext } from "../../hooks/AuthProvider";
 
 // Adjusted ProfileProps to match your updateProfile function's expectation
 interface ProfileProps {
@@ -20,6 +22,9 @@ export const Profile = () => {
   const [profile, setProfile] = useState<ProfileProps | null>(null);
 
   const { user } = useContext(UserContext);
+  const { location, setLocation } = useContext(LocationContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   useEffect(() => {

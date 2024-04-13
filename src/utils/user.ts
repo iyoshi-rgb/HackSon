@@ -28,3 +28,22 @@ export const getLocation = async (userID: string) => {
   console.log("Location data", data);
   return data ? data : null;
 };
+
+export async function getUsersByChatRoomId(chatRoomId: number) {
+  try {
+    const { data, error } = await supabase
+      .from("ChatRoomMembers")
+      .select("UserID")
+      .eq("ChatRoomID", chatRoomId)
+      .select();
+
+    if (error) {
+      throw error;
+    }
+
+    return data.map((item) => item.UserID);
+  } catch (error) {
+    console.error("Error fetching user IDs", error);
+    return []; // エラーが発生した場合は空の配列を返す
+  }
+}

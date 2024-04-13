@@ -62,7 +62,7 @@ export const Roomlist = () => {
     fetchLocation();
   }, [userId, userLocation]);
 
-  const handleJoinRoom = async (chatRoomId: string) => {
+  const handleJoinRoom = async (chatRoomId: number) => {
     if (userId) {
       const data = await joinChatRoom(userId, chatRoomId);
       if (data) {
@@ -73,6 +73,9 @@ export const Roomlist = () => {
     }
   };
   console.log("chatRoomNames", chatRoomNames);
+  if (!userLocation) {
+    return <div>地元を登録してください。</div>;
+  }
   return (
     <>
       <div className="text-3xl font-bold text-center my-1">Room List</div>

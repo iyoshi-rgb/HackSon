@@ -1,6 +1,8 @@
 import { supabase } from "./supabase";
 
 import { createChatRoom } from "./makeroom";
+import { useContext } from "react";
+import { AuthContext } from "../hooks/AuthProvider";
 
 export async function CreateChatRoomFunc(
   userID: string,
@@ -20,6 +22,7 @@ export async function CreateChatRoomFunc(
 }
 
 export async function handleSocialLogin(provider: any) {
+
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
