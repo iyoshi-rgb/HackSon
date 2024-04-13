@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { CreateChatRoomFunc } from "../../utils/supabasefunction";
-import { getUser } from "../../utils/supabasefunction";
+import { createChatRoom } from "../../utils/makeroom";
+import { getUser } from "../../utils/user";
 import { useNavigate } from "react-router-dom";
 
 export const Makeroom = () => {
@@ -15,8 +15,12 @@ export const Makeroom = () => {
 
   useEffect(() => {
     async function fetchUser() {
-      const userId = await getUser();
-      setUserId(userId);
+      const userData = await getUser();
+      if (userData) {
+        setUserId(userData.userId); // userが存在する場合、userIdを設定
+      } else {
+        setUserId(null); // userがnullの場合、userIdをnullに設定
+      }
     }
 
     fetchUser();
@@ -24,7 +28,7 @@ export const Makeroom = () => {
 
   const handleCreateRoom = async () => {
     console.log(userId, title, about, chatRoomType, location);
-    createRoomData = await CreateChatRoomFunc(
+    createRoomData = await createChatRoom(
       userId,
       title,
       about,
