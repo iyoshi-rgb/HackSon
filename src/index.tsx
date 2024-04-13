@@ -10,6 +10,7 @@ import { Roomlist } from "./pages/views/roomlist";
 import { Profile } from "./pages/views/profile";
 import { Chat } from "./pages/views/chat";
 import { Makeroom } from "./pages/views/makeroom";
+import { Room } from "./pages/views/room";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -22,6 +23,7 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="makeroom" element={<Makeroom />} />
+        <Route path="/room" element={<Room />} />
         <Route path="/roomlist" element={<Roomlist />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/chat" element={<Chat />} />

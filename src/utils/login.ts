@@ -1,8 +1,6 @@
 import { supabase } from "./supabase";
 import { createChatRoom } from "./makeroom";
 
-
-
 export async function CreateChatRoomFunc(
   userID: string,
   title: string,
@@ -27,21 +25,20 @@ export async function CreateChatRoomFunc(
 }
 
 export async function handleSocialLogin(provider: any) {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        queryParams: {
-          access_type: 'offline',
-          prompt: 'consent',
-        },
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider,
+    options: {
+      queryParams: {
+        access_type: "offline",
+        prompt: "consent",
       },
-    });
-  
-    if (error) {
-      console.log(error);
-      return;
-    }else{
-        console.log('success');
+    },
+  });
 
-    }
+  if (error) {
+    console.log(error);
+    return;
+  } else {
+    console.log("success");
   }
+}
