@@ -4,7 +4,7 @@ import { getLocation } from "../../utils/user";
 import { useNavigate } from "react-router-dom";
 
 import {
-  getChatRoomIds,
+  getChatRoomDetailsByUserId,
   getMyChatRooms,
   getChatRoomsByLocation,
 } from "../../utils/viewroom";
@@ -13,7 +13,7 @@ import { joinChatRoom } from "../../utils/joinroom";
 export const Roomlist = () => {
   const navigate = useNavigate();
   const [userLocation, setUserLocation] = useState<string>("");
-  const [chatRoomIds, setChatRoomIds] = useState<number[]>([]);
+  const [chatRoomNames, setChatRoomNames] = useState<string[]>([]);
   const [myChatRooms, setMyChatRooms] = useState<any[]>([]);
   const [chatRoomsByLocation, setChatRoomsByLocation] = useState<any[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
@@ -34,13 +34,17 @@ export const Roomlist = () => {
       setUserId(user?.userId ?? null);
 
       if (userId) {
-        const roomIds = await getChatRoomIds(userId);
+        const roomDetails = await getChatRoomDetailsByUserId(userId);
         const myRooms = await getMyChatRooms(userId);
         const roomsByLocation = await getChatRoomsByLocation(userLocation);
 
-        if (roomIds) {
-          setChatRoomIds(roomIds);
-          console.log("roomIds", roomIds);
+        if (roomDetails) {
+          // roomDetails から null を除外し、各部屋の Title を抽出して配列にする
+          const roomNames = roomDetails
+            .filter((room) => room !== null)
+            .map((room) => (room ? room.Title : ""));
+          setChatRoomNames(roomNames);
+          console.log("roomName", roomNames);
         }
         if (myRooms) {
           setMyChatRooms(myRooms);
@@ -67,18 +71,19 @@ export const Roomlist = () => {
       }
     }
   };
-
+  console.log("chatRoomNames", chatRoomNames);
   return (
     <>
       <div>Room List</div>
       <h2>参加している募集部屋</h2>
-      {/* <ul>
-        {chatRoomIds.map((chatRoom) => (
-          <li key={chatRoom}>
-            <button>{chatRoom}</button>
-          </li>
-        ))}
-      </ul> */}
+      <ul>
+        {chatRoomNames &&
+          chatRoomNames.map((chatRoomId) => (
+            <li key={chatRoomId}>
+              <button>{chatRoomId}</button>
+            </li>
+          ))}
+      </ul>
       <h2>自分が作成した部屋</h2>
       <ul>
         {myChatRooms.map((room) => (
