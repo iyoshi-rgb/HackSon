@@ -29,24 +29,25 @@ export const Header = () => {
           </a>
 
           <nav className="hidden gap-12 lg:flex">
-            <a
-              href="#"
-              className="text-lg font-semibold text-gray-600 transition duration-100 hover:text-indigo-500 active:text-indigo-700"
+            <Link
+              to={"/home"}
+              className="inline-flex items-center gap-1 text-lg font-semibold hover:text-indigo-500 active:text-indigo-700"
             >
               Home
-            </a>
+            </Link>
+
             <Link
               to={"/chat"}
               className="inline-flex items-center gap-1 text-lg font-semibold hover:text-indigo-500 active:text-indigo-700"
             >
               Chat
             </Link>
-            <a
-              href="#"
-              className="text-lg font-semibold text-gray-600 transition duration-100 hover:text-indigo-500 active:text-indigo-700"
+            <Link
+              to={"/roomlist"}
+              className="inline-flex items-center gap-1 text-lg font-semibold hover:text-indigo-500 active:text-indigo-700"
             >
-              About
-            </a>
+              部屋一覧
+            </Link>
           </nav>
 
           <div className="-ml-8 hidden flex-col gap-2.5 sm:flex-row sm:justify-center lg:flex lg:justify-start">
