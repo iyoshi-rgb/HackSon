@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { CreateChatRoomFunc } from "../../utils/supabasefunction";
-import { getUser } from "../../utils/supabasefunction";
+import { createChatRoom } from "../../utils/makeroom";
+import { getUser } from "../../utils/user";
 import { useNavigate } from "react-router-dom";
 
 export const Makeroom = () => {
   const navigate = useNavigate();
   let createRoomData: any;
 
-  const [userId, setUserId] = useState<string | null>(null);
+  const [userID, setUserId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [about, setAbout] = useState("");
   const [chatRoomType, setChatRoomType] = useState("group");
@@ -15,33 +15,36 @@ export const Makeroom = () => {
 
   useEffect(() => {
     async function fetchUser() {
-      const userId = await getUser();
-      setUserId(userId);
+      const userData = await getUser();
+      if (userData) {
+        const userID = userData.userId;
+        setUserId(userID);
+      }
     }
 
     fetchUser();
   }, []);
 
   const handleCreateRoom = async () => {
-    console.log(userId, title, about, chatRoomType, location);
-    createRoomData = await CreateChatRoomFunc(
-      userId,
-      title,
-      about,
-      chatRoomType,
-      location
-    );
-    setTitle("");
-    setAbout("");
-    setChatRoomType("group");
-    setLocation("");
-    console.log(createRoomData);
-    if (createRoomData && createRoomData.length > 0) {
-      const ChatRoomID = createRoomData[0].ChatRoomID;
-      // 作成したルームに遷移
-      navigate(`/room?ChatRoomID=${ChatRoomID}`);
-    } else {
-      console.error("No data returned or room creation failed");
+    if (userID) {
+      createRoomData = await createChatRoom(
+        userID,
+        title,
+        about,
+        chatRoomType,
+        location
+      );
+      setTitle("");
+      setAbout("");
+      setChatRoomType("group");
+      setLocation("");
+      console.log(createRoomData);
+      if (createRoomData && createRoomData.length > 0) {
+        const ChatRoomID = createRoomData[0].ChatRoomID;
+        navigate(`/room?ChatRoomID=${ChatRoomID}`);
+      } else {
+        console.error("No data returned or room creation failed");
+      }
     }
   };
 
