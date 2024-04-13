@@ -19,7 +19,6 @@ export async function CreateChatRoomFunc(
   console.log("Created Room:", createRoomData);
 }
 
-
 export async function handleSocialLogin(provider: any) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
@@ -35,7 +34,6 @@ export async function handleSocialLogin(provider: any) {
     console.log(error);
     return;
   } else {
-
     console.log(data);
   }
 }
@@ -50,16 +48,4 @@ export async function getUser() {
   } else {
     return "No User";
   }
-}
-
-export async function getProfile(userId: string) {
-  // userIdをパラメータとして受け取り、それを使ってプロフィール情報を取得
-  const { data: profile, error } = await supabase.from("profiles").select("*").eq("userId", userId).single();
-
-  if (error) {
-    console.error("Error fetching profile:", error);
-    return null;
-  }
-  return profile;
-
 }

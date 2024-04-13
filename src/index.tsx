@@ -12,6 +12,8 @@ import { Chat } from "./pages/views/chat";
 import { Makeroom } from "./pages/views/makeroom";
 import { Header } from "./layouts/Header";
 import { Room } from "./pages/views/room";
+import { UserProvider } from "./hooks/UserProvider";
+import { LocationProvider } from "./hooks/LocationProvider";
 
 
 const root = ReactDOM.createRoot(
@@ -19,19 +21,23 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="makeroom" element={<Makeroom />} />
-        <Route path="/room" element={<Room />} />
-        <Route path="/roomlist" element={<Roomlist />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/chat" element={<Chat />} />
-      </Routes>
-    </Router>
+    <UserProvider>
+      <LocationProvider>
+        <Router>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="makeroom" element={<Makeroom />} />
+            <Route path="/room" element={<Room />} />
+            <Route path="/roomlist" element={<Roomlist />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/chat" element={<Chat />} />
+          </Routes>
+        </Router>
+      </LocationProvider>
+    </UserProvider>
   </React.StrictMode>
 );
 

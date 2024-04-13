@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GoogleButton } from "../../components/GoogleButton";
 
 import { handleSocialLogin } from "../../utils/login";
@@ -7,8 +7,12 @@ import { getUser } from "../../utils/user";
 import { Top } from "../../layouts/login/top";
 import LoadingAndRedirect from "../../layouts/login/Modal";
 import Accordion from "../../layouts/login/Accordion";
+import { UserContext } from "../../hooks/UserProvider";
+import { LocationContext } from "../../hooks/LocationProvider";
 
 export const Login = () => {
+  const { setUser }: any = useContext(UserContext);
+  const { setLocation }: any = useContext(LocationContext);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
@@ -16,6 +20,8 @@ export const Login = () => {
       const user = await getUser();
       if (user) {
         setIsLoggedIn(!isLoggedIn);
+        setUser({ id: user.userId, name: user.userName });
+        setLocation({ name: "和歌山" });
       }
     }
 
