@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getUserName } from "../../utils/user";
-import { getProfile, getUser } from "../../utils/login";
+import { getUser } from "../../utils/user";
+import { getProfile } from "../../utils/login";
+import { Logout } from "../../utils/logout";
+import { useNavigate } from "react-router-dom";
 
 interface Profile {
   userId: string;
@@ -14,9 +16,16 @@ interface Profile {
 export const Profile = () => {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [userName, setUserName] = useState<string>("");
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await Logout();
+    navigate("/");
+  };
   useEffect(() => {
     async function fetchData() {
-      const userData = await getUserName(); // getUserName の戻り値を直接分割代入しない
+      const userData = await getUser(); // getUserName の戻り値を直接分割代入しない
 
       if (userData) {
         // userDataがundefinedまたはnullでないことを確認
@@ -39,6 +48,9 @@ export const Profile = () => {
   return (
     <div className="">
       <div className="w-full h-24 bg-slate-400 flex">
+        <button onClick={handleLogout} className="btn btn-neutral">
+          Logout
+        </button>
         <div className="flex justify-center w-4/5">
           <img className="mt-3 h-10 w-10 mr-4 rounded-full" src={profile?.userImage || "default.png"} alt="画像" />
           <div className="flex flex-col">
