@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchTest } from "./utils/supabasefunction";
+import { fetchTest } from "./utils/login";
 
 interface Todo {
   id: number;
