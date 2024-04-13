@@ -21,7 +21,7 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/makeroom" element={<Makeroom />} />
+        <Route path="makeroom" element={<Makeroom />} />
         <Route path="/roomlist" element={<Roomlist />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/chat" element={<Chat />} />

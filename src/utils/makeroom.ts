@@ -1,10 +1,12 @@
 import { supabase } from "./supabase";
 
 export const createChatRoom = async (
-  userID: number,
+  userID: string,
   title: string,
   about: string,
-  chatRoomType: string
+  chatRoomType: string,
+  location: string
+
 ) => {
   const { data, error } = await supabase
     .from("ChatRooms")
@@ -14,6 +16,7 @@ export const createChatRoom = async (
         Title: title,
         About: about,
         ChatRoomType: chatRoomType,
+        Location: location,
         CreatedAt: new Date(),
       },
     ])
