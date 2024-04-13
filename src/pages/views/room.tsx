@@ -1,12 +1,12 @@
 import { useLocation } from "react-router";
 import { getMessage, makemessage } from "../../utils/makemessage";
 import { useContext, useEffect, useState } from "react";
-import { getUser } from "../../utils/login";
+import { UserContext } from "../../hooks/UserProvider";
 
 export const Room = () => {
   const [sendMessage, setSendMessage] = useState<string>("");
   const [message, setMessage] = useState<any[]>([]);
-  const { userId, setUserId } = useState<string>();
+  const { user } = useContext(UserContext);
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -14,17 +14,18 @@ export const Room = () => {
 
   useEffect(() => {
     async function fechtchat() {
-      const user = await getUser();
-      setUserId(user.userId);
-      if (ChatRoomID) {
-        const data = await getMessage(Number(ChatRoomID));
+      if (user) {
+        if (ChatRoomID) {
+          const data = await getMessage(Number(ChatRoomID));
 
-        if (data) {
-          setMessage(data);
-          console.log("data", data);
-        } else {
-          return;
+          if (data) {
+            setMessage(data);
+            console.log("data", message);
+          } else {
+            return;
+          }
         }
+      } else {
       }
     }
     fechtchat();
@@ -36,8 +37,7 @@ export const Room = () => {
     const message = e.target.elements.messageInput.value; // inputのname属性を使用して値にアクセス
     console.log(message); // ここでメッセージを処理（例えばサーバーに送信）
     if (ChatRoomID) {
-      const result = await makemessage(userId, message, Number(ChatRoomID));
-      console.log(userId);
+      const result = await makemessage(user.id, message, Number(ChatRoomID));
       console.log(result);
       const data = await getMessage(Number(ChatRoomID));
       setMessage(data);
@@ -46,30 +46,30 @@ export const Room = () => {
   };
 
   return (
-    <div>
-      <div className="chat">
+    <div className="text-center">
+      <div className="flex flex-col items-center w-full">
         {message.map((mes: any, index: number) => (
           // eslint-disable-next-line eqeqeq
           <div
             className={`chat ${
-              userId === mes.UserID ? "chat-end" : "chat-start"
-            }`}
+              user.id === mes.UserID ? "chat-end" : "chat-start"
+            } w-4/5 `}
             key={index}
           >
             {mes.Message}
-            {user.id}
-            {mes.UserID}
           </div>
         ))}
       </div>
-      <form onSubmit={handleSendMessage}>
-        <input
-          type="text"
+      <form onSubmit={handleSendMessage} className="mt-4">
+        <textarea
           name="messageInput"
           value={sendMessage}
           onChange={(e) => setSendMessage(e.target.value)}
+          className="textarea textarea-bordered textarea-lg w-full max-w-xs"
         />
-        <button type="submit">送信</button>
+        <button className="btn btn-neutral mt-2" type="submit">
+          Send
+        </button>
       </form>
     </div>
   );
