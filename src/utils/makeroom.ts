@@ -6,6 +6,7 @@ export const createChatRoom = async (
   about: string,
   chatRoomType: string,
   location: string
+
 ) => {
   const { data, error } = await supabase
     .from("ChatRooms")

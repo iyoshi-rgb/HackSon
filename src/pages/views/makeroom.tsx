@@ -2,10 +2,9 @@ import { useState } from "react";
 import { CreateChatRoomFunc } from "../../utils/supabasefunction";
 
 export const Makeroom = () => {
-  // フォームの状態を管理するための state フック
   const [title, setTitle] = useState("");
   const [about, setAbout] = useState("");
-  const [chatRoomType, setChatRoomType] = useState("group"); // 初期値を 'group' とする
+  const [chatRoomType, setChatRoomType] = useState("group");
   const [location, setLocation] = useState("");
 
   const handleCreateRoom = () => {
