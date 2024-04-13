@@ -1,9 +1,13 @@
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import { getUser } from "../../utils/user";
 import { getProfile } from "../../utils/login";
 import Modal from "../../components/Modal";
 import { Logout } from "../../utils/logout";
+import { UserContext } from "../../hooks/UserProvider";
+import { LocationContext } from "../../hooks/LocationProvider"
 
 interface ProfileProps {
   userId: string;
@@ -18,6 +22,9 @@ export const Profile = () => {
   const [showModal, setShowModal] = useState(false);
   const [profile, setProfile] = useState<ProfileProps | null>(null);
   const [userName, setUserName] = useState<string>("");
+
+  const { user } = useContext(UserContext);
+  const { location, setLocation } = useContext(LocationContext);
 
   const navigate = useNavigate();
 
@@ -67,6 +74,7 @@ export const Profile = () => {
   };
 
   return (
+<
     <>
       <Modal
         isVisible={showModal}
@@ -86,6 +94,7 @@ export const Profile = () => {
               <div className="text-xl font-medium">{userName}</div>
               <div>
                 <div>{profile?.location || "未設定"}</div>
+
 
                 {/* いいね機能の追加 */}
                 {/* <div>{profile.likes}</div> */}
@@ -111,6 +120,8 @@ export const Profile = () => {
           </div>
         </div>
       </div>
+
     </>
+
   );
 };
