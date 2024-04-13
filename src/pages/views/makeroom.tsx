@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CreateChatRoomFunc } from "../../utils/supabasefunction";
+import { CreateChatRoomFunc } from "../../utils/login";
 
 export const Makeroom = () => {
   const [title, setTitle] = useState("");

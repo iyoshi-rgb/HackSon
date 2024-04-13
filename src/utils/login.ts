@@ -56,9 +56,5 @@ export async function handleSocialLogin(provider: any) {
     
     if(user){
       return user.id
-    }else{
-      return 'No User'
-
     }
-
   }
