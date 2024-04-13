@@ -1,6 +1,8 @@
 
 import React, { useContext, useEffect, useState, FormEvent } from "react";
 import { UserContext } from "../../hooks/UserProvider";
+import { UseUserIdContext } from "../../hooks/UserIdProvider";
+
 import {
   getPostMessages,
   postMessage,
@@ -14,6 +16,8 @@ interface Message {
 }
 
 export const Chat = () => {
+  const { receiverUserID, setReceiverUserID } = UseUserIdContext(); // UseUserIdContext を使用
+
   const [content, setContent] = useState<string>("");
   const { user } = useContext(UserContext);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -23,7 +27,7 @@ export const Chat = () => {
     if (content.trim() === "") return;
 
     await postMessage({
-      receiver_id: "7b01d1da-9d68-4dbb-8108-70802d0992cc",
+      receiver_id: receiverUserID,
       sender_id: user.id,
       content,
     });

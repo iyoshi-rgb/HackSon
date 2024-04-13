@@ -5,6 +5,7 @@ import { Logout } from "../../utils/logout";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../hooks/UserProvider";
 import { LocationContext } from "../../hooks/LocationProvider";
+import { AuthContext } from "../../hooks/AuthProvider";
 
 interface Profile {
   userId: string;
@@ -21,13 +22,9 @@ export const Profile = () => {
 
   const { user } = useContext(UserContext);
   const { location, setLocation } = useContext(LocationContext);
+  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await Logout();
-    navigate("/");
-  };
 
   useEffect(() => {
     async function fetchData() {
@@ -54,9 +51,6 @@ export const Profile = () => {
   return (
     <div className="">
       <div className="w-full h-24 bg-slate-400 flex">
-        <button onClick={handleLogout} className="btn btn-neutral">
-          Logout
-        </button>
         <div className="flex justify-center w-4/5">
           <img
             className="mt-3 h-10 w-10 mr-4 rounded-full"

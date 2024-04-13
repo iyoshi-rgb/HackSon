@@ -2,15 +2,21 @@ import { useLocation } from "react-router";
 import { getMessage, makemessage } from "../../utils/makemessage";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../hooks/UserProvider";
+import { getUsersByChatRoomId } from "../../utils/user";
+import { UseUserIdContext } from "../../hooks/UserIdProvider";
+import { useNavigate } from "react-router-dom";
 
 export const Room = () => {
   const [sendMessage, setSendMessage] = useState<string>("");
   const [message, setMessage] = useState<any[]>([]);
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const ChatRoomID = queryParams.get("ChatRoomID");
+  const ChatRoomID = Number(queryParams.get("ChatRoomID"));
+  const [joinUsersId, setJoinUsersId] = useState<any[]>();
+  const { receiverUserID, setReceiverUserID } = UseUserIdContext(); //
 
   useEffect(() => {
     async function fechtchat() {
@@ -29,7 +35,17 @@ export const Room = () => {
       }
     }
     fechtchat();
-  }, []);
+
+    async function fetchJoinUsersData() {
+      if (ChatRoomID) {
+        const joinUsersData = await getUsersByChatRoomId(ChatRoomID);
+        setJoinUsersId(joinUsersData);
+        console.log("Join users data", joinUsersData);
+      }
+    }
+
+    fetchJoinUsersData();
+  }, [ChatRoomID]);
 
   const handleSendMessage = async (e: any) => {
     e.preventDefault(); // フォームのデフォルト送信動作を防止
@@ -44,10 +60,16 @@ export const Room = () => {
       console.log("message", message);
     }
   };
+  const handleSelectUserId = (userId: string) => {
+    console.log("Selected UserID:", userId);
+    setReceiverUserID(userId);
+    navigate(`/chat`);
+  };
 
   return (
     <div className="text-center">
       <div className="flex flex-col items-center w-full">
+      <div className="text-2xl font-bold text-center my-4">Room</div>
         {message.map((mes: any, index: number) => (
           // eslint-disable-next-line eqeqeq
           <div
@@ -71,6 +93,32 @@ export const Room = () => {
           Send
         </button>
       </form>
+      <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+        <div className="mb-4">
+          <h2 className="text-xl font-semibold text-center my-10">
+            参加しているユーザー
+          </h2>
+          <div className="flex justify-center my-5">
+            <ul className="space-y-4">
+              {joinUsersId &&
+                joinUsersId.map((user) => (
+                  <li key={user.UserID}>
+                    <div className="card w-96 bg-base-100 shadow-md rounded-lg">
+                      <div className="card-body">
+                        <h3
+                          className="card-title text-base cursor-pointer"
+                          onClick={() => handleSelectUserId(user.UserID)}
+                        >
+                          {user.UserID}
+                        </h3>
+                      </div>
+                    </div>
+                  </li>
+                ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
