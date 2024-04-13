@@ -12,10 +12,7 @@ export const getChatRoomIds = async (userID: string) => {
     console.error("Error fetching ChatRoomID", error);
     return null;
   }
-
-  // data からChatRoomIDのリストを抽出
-  const chatRoomIds = data.map((entry) => entry.ChatRoomID);
-  return chatRoomIds;
+  return data;
 };
 
 export const getMyChatRooms = async (userID: string) => {
@@ -28,7 +25,6 @@ export const getMyChatRooms = async (userID: string) => {
     console.error("Error fetching chat rooms by UserID", error);
     return null;
   }
-
   return data;
 };
 
