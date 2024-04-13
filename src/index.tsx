@@ -10,6 +10,7 @@ import { Roomlist } from "./pages/views/roomlist";
 import { Profile } from "./pages/views/profile";
 import { Chat } from "./pages/views/chat";
 import { Makeroom } from "./pages/views/makeroom";
+import { Header } from "./layouts/Header";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,6 +18,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Router>
+      <Header />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
