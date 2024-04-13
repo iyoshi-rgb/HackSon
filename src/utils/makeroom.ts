@@ -1,5 +1,6 @@
 import { supabase } from "./supabase";
 
+// チャットルームを作成し、その結果を返す関数
 export const createChatRoom = async (
   userID: string | null,
   title: string,
@@ -27,6 +28,5 @@ export const createChatRoom = async (
     return null;
   }
 
-  // 挿入したデータの戻り値
   return data;
 };
