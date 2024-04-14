@@ -5,7 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Login } from "./pages/views/login";
-import { Roomlist } from "./pages/views/roomlist";
+import { RoomList } from "./pages/views/roomlist";
 import { Profile } from "./pages/views/profile";
 import { Chat } from "./pages/views/chat";
 import { Makeroom } from "./pages/views/makeroom";
@@ -34,7 +34,7 @@ root.render(
               <Route path="makeroom" element={<Makeroom />} />
               <Route path="/room" element={<Room />} />
               <Route path="/myRooms" element={<MyRoomList />} />
-              <Route path="/roomlist" element={<Roomlist />} />
+              <Route path="/roomlist" element={<RoomList />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/chat" element={<Chat />} />
             </Routes>
