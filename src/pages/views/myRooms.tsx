@@ -47,13 +47,13 @@ export const MyRoomList = () => {
     fetchLocation();
   }, [userId, userLocation]);
 
-  const handleJoinRoom = async (chatRoomId: any): Promise<void> => {
-    if (userId) {
-      navigate(`/room?ChatRoomID=${room.ChatRoomID}`);
-    } else {
-      alert("Failed to join the room");
-    }
-  };
+  // const handleJoinRoom = async (chatRoomId: any): Promise<void> => {
+  //   if (userId) {
+  //     // navigate(`/room?ChatRoomID=${room.ChatRoomID}`);
+  //   } else {
+  //     alert("Failed to join the room");
+  //   }
+  // };
 
   if (!userLocation) {
     return <div>地元を登録してください。</div>;
