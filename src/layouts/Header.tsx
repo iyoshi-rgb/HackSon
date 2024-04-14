@@ -110,7 +110,6 @@ export const Header = () => {
                   >
                     <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
                   </svg>
-                  Menu
                 </summary>
                 <ul className="dropdown-content z-[1] menu p-2 font-semibold shadow bg-base-100 rounded-box ">
                   <Link to={"/profile"} className="flex flex-row items-center">
@@ -168,7 +167,7 @@ export const Header = () => {
               {isLoggedIn && (
                 <Link to={"/chat"} className="flex flex-row items-center">
                   <MessageSquareText />
-                  <li className="p-2">チャット</li>
+                  <li className="p-2"></li>
                 </Link>
               )}
             </ul>

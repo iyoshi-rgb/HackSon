@@ -60,7 +60,7 @@ export const RoomList: React.FC = () => {
   };
 
   if (!userLocation) {
-    return <div>Please set your local area.</div>;
+    return <div>地元を登録してください。</div>;
   }
 
   const filteredChatRooms = chatRoomsByLocation.filter(
