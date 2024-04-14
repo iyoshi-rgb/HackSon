@@ -86,7 +86,9 @@ export const RoomList: React.FC = () => {
                 <div className="card-body">
                   <h3
                     className="card-title clickable text-base"
-                    onClick={() => navigate(`/room/${room.ChatRoomID}`)}
+                    onClick={() =>
+                      navigate(`/room?ChatRoomID=${room.ChatRoomID}`)
+                    }
                   >
                     {room.Title}
                   </h3>
