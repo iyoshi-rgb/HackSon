@@ -86,7 +86,7 @@ export const Profile = () => {
         }
         onUpdate={handleUpdateProfile}
       />
-      <div className="card w-4/5 bg-neutral text-neutral-content mx-auto shadow-xl">
+      <div className="w-4/5 bg-neutral rounded text-neutral-content mx-auto shadow-xl">
       <div className="w-full h-30 bg-slate-400 flex">
         <button onClick={handleLogout} className="btn btn-neutral">
           ログアウト
