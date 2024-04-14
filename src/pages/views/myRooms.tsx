@@ -37,6 +37,7 @@ export const MyRoomList = () => {
           setChatRoomDetails(roomDetails);
         }
         const myRooms = await getMyChatRooms(userId);
+        console.log("myRooms", myRooms);
         if (myRooms) {
           setMyChatRooms(myRooms);
         }
@@ -64,7 +65,7 @@ export const MyRoomList = () => {
       <h2 className="text-2xl font-bold text-center my-10">参加済みの部屋</h2>
       <div className="flex justify-center my-5">
         <ul className="space-y-4">
-          {chatRoomDetails.map((room) => (
+          {myChatRooms.map((room) => (
             <li key={room.ChatRoomID}>
               <div className="card w-96 bg-base-100 shadow-md rounded-lg">
                 <div className="card-body">
@@ -77,13 +78,13 @@ export const MyRoomList = () => {
                     {room.Title}
                   </h3>
                   <p className="text-xs">{room.About}</p>
-                  <button
+                  {/* <button
                     onClick={() =>
                       navigate(`/room?ChatRoomID=${room.ChatRoomID}`)
                     }
                   >
                     見る
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </li>
