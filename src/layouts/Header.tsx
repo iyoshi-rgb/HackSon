@@ -48,10 +48,22 @@ export const Header = () => {
                 Home
               </Link>
               <Link
-                to="/roomlist"
-                className="inline-flex items-center gap-1 text-lg font-semibold hover:text-cyan-500 active:text-cyan-700"
+                to={"/roomlist"}
+                className="inline-flex items-center gap-1 text-base font-semibold hover:text-indigo-500 active:text-indigo-700"
               >
-                部屋一覧
+                募集されている部屋
+              </Link>
+              <Link
+                to={"/myRooms"}
+                className="inline-flex items-center gap-1 text-base font-semibold hover:text-indigo-500 active:text-indigo-700"
+              >
+                参加済みの部屋
+              </Link>
+              <Link
+                to={"/makeroom"}
+                className="inline-flex items-center gap-1 text-base font-semibold hover:text-indigo-500 active:text-indigo-700"
+              >
+                募集部屋を作る
               </Link>
             </nav>
 
