@@ -9,7 +9,7 @@ import {
   getMyChatRooms,
 } from "../../utils/viewroom";
 
-export const Roomlist = () => {
+export const MyRoomList = () => {
   const navigate = useNavigate();
   const [userLocation, setUserLocation] = useState<string>("");
   const [chatRoomNames, setChatRoomNames] = useState<string[]>([]);
