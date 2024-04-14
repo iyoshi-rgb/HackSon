@@ -127,12 +127,7 @@ export const Header = () => {
                     <NotebookPen />
                     <li className="p-2">作成した部屋</li>
                   </Link>
-                  {isLoggedIn && (
-                    <Link to={"/chat"} className="flex flex-row items-center">
-                      <MessageSquareText />
-                      <li className="p-2">チャット</li>
-                    </Link>
-                  )}
+
                 </ul>
               </details>
             </div>
@@ -164,12 +159,6 @@ export const Header = () => {
                 <NotebookPen />
                 <li className="p-2">作成した部屋</li>
               </Link>
-              {isLoggedIn && (
-                <Link to={"/chat"} className="flex flex-row items-center">
-                  <MessageSquareText />
-                  <li className="p-2"></li>
-                </Link>
-              )}
             </ul>
           </details>
         </header>
