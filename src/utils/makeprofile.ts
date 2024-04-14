@@ -77,3 +77,12 @@ export async function getProfile(userId: string) {
 //   }
 //   return data;
 // };
+
+export const UserUpdate = async (location : any,id : any) => {
+  const { data, error } = await supabase
+  .from('Profile')
+  .update({ Location: location })
+  .eq('UserId', id)
+  .select()
+
+}

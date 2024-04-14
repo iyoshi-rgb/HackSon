@@ -26,4 +26,14 @@ export const insertProfile = async ( UserId : any,UserName :any) => {
     }
 }
 
-          
+export const fetchLocation = async (id : string | undefined) => {
+const { data: Profile, error } = await supabase
+  .from('Profile')
+  .select("Location").eq('UserId' , id)
+  
+if(Profile){
+    return Profile
+}else{
+    return 
+}
+}

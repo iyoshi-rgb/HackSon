@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GoogleButton } from "../components/GoogleButton";
 import { handleSocialLogin } from "../utils/login";
 import { Link } from "react-router-dom";
@@ -6,10 +6,13 @@ import { AuthContext } from "../hooks/AuthProvider";
 import { Logout } from "../utils/logout";
 import { CircleUserRound } from "lucide-react";
 import { MessageSquareText, NotebookText, NotebookPen } from "lucide-react";
+import { getUser } from "../utils/user";
+import { fetchLocation } from "../utils/profile";
 
 export const Header = () => {
   // useContext から isLoggedIn と setIsLoggedIn を正しく取得
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+  const [location, setLocation] = useState<any>();
 
   // ログアウト処理
   const handleLogout = async () => {
@@ -127,7 +130,6 @@ export const Header = () => {
                     <NotebookPen />
                     <li className="p-2">作成した部屋</li>
                   </Link>
-
                 </ul>
               </details>
             </div>
