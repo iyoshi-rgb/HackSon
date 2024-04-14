@@ -16,9 +16,9 @@ export const Makeroom = () => {
     async function fetchUser() {
       const userData = await getUser();
       if (userData) {
-        setUserId(userData.userId); // userが存在する場合、userIdを設定
+        setUserId(userData.userId);
       } else {
-        setUserId(null); // userがnullの場合、userIdをnullに設定
+        setUserId(null);
       }
     }
 
@@ -33,7 +33,6 @@ export const Makeroom = () => {
     console.log(createRoomData);
     if (createRoomData && createRoomData.length > 0) {
       const ChatRoomID = createRoomData[0].ChatRoomID;
-      // 作成したルームに遷移
       navigate(`/room?ChatRoomID=${ChatRoomID}`);
     } else {
       console.error("No data returned or room creation failed");
@@ -42,8 +41,10 @@ export const Makeroom = () => {
 
   return (
     <>
-      <div className="text-2xl font-bold text-center my-4">Make Room</div>
-      <form className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <div className="text-2xl font-bold text-center my-10">
+        募集部屋の新規作成
+      </div>
+      <form className="max-w-md max-h-md mx-auto my-10 bg-white p-8 rounded-sm shadow-lg ">
         <div className="mb-4">
           <input
             type="text"
@@ -69,7 +70,7 @@ export const Makeroom = () => {
             onChange={(e) => setLocation(e.target.value)}
             className="select select-bordered w-full"
           >
-            <option value="">地元を選択</option>
+            <option value="">旅行先を選択</option>
             <option value="北海道">北海道</option>
             <option value="青森県">青森県</option>
             <option value="岩手県">岩手県</option>
@@ -122,9 +123,9 @@ export const Makeroom = () => {
         <button
           type="button"
           onClick={handleCreateRoom}
-          className="btn btn-primary w-full"
+          className="btn bg-blue-700 text-white w-full hover:border-blue-700 hover:text-blue-700 hover:bg-white"
         >
-          ダミーデータを作成する
+          募集部屋を作成する
         </button>
       </form>
     </>
