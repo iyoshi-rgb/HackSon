@@ -41,34 +41,34 @@ export const Makeroom = () => {
 
   return (
     <>
-      <div className="text-2xl font-bold text-center my-10">
+      <div className="text-2xl font-bold text-center mt-10 mb-3">
         募集部屋の新規作成
       </div>
-      <form className="max-w-md max-h-md mx-auto my-10 bg-white p-8 rounded-sm shadow-lg ">
-        <div className="mb-4">
+      <form className="max-w-md mx-auto bg-white p-8 rounded-sm shadow-lg ">
+        <div className="mb-4 mt-2">
           <input
             type="text"
             placeholder="部屋のタイトル"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="input input-bordered w-full"
+            className="input input-bordered w-full text-sm rounded-none-xs"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-4 mt-2 flex items-start">
           <input
             type="text"
             placeholder="概要"
             value={about}
             onChange={(e) => setAbout(e.target.value)}
-            className="input input-bordered w-full"
+            className="input input-bordered w-full py-2 h-24 text-xs rounded-none-xs"
           />
         </div>
 
-        <div className="mb-4">
+        <div className="mb-4 mt-2">
           <select
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            className="select select-bordered w-full"
+            className="select select-bordered w-full text-sm rounded-none-xs"
           >
             <option value="">旅行先を選択</option>
             <option value="北海道">北海道</option>
@@ -123,7 +123,7 @@ export const Makeroom = () => {
         <button
           type="button"
           onClick={handleCreateRoom}
-          className="btn bg-blue-700 text-white w-full hover:border-blue-700 hover:text-blue-700 hover:bg-white"
+          className="btn bg-blue-700 text-white mt-10 w-full hover:border-blue-700 hover:text-blue-700 hover:bg-white"
         >
           募集部屋を作成する
         </button>
