@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState, FormEvent } from "react";
 import { UserContext } from "../../hooks/UserProvider";
 import { UseUserIdContext } from "../../hooks/UserIdProvider";
+import { useLocation } from "react-router-dom";
+import { getUser } from "../../utils/user";
 
 import {
   getPostMessages,
@@ -11,15 +13,31 @@ import {
 interface Message {
   sender_id: string;
   content: string;
-  type: "sent" | "received"; // 送信されたメッセージか受信したメッセージかを区別するためのタイプ
+  type: "sent" | "received";
 }
 
 export const Chat = () => {
-  const { receiverUserID, setReceiverUserID } = UseUserIdContext(); // UseUserIdContext を使用
+  // const { receiverUserID, setReceiverUserID } = UseUserIdContext();
+  // const { user } = useContext(UserContext);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const receiverUserID = queryParams.get("userID");
 
   const [content, setContent] = useState<string>("");
-  const { user } = useContext(UserContext);
+  const [sendUserID, setSendUserID] = useState<string>("");
   const [messages, setMessages] = useState<Message[]>([]);
+
+  useEffect(() => {
+    // 非同期関数を定義
+    const fetchUser = async () => {
+      const userData = await getUser();
+      if (userData) {
+        setSendUserID(userData.userId);
+      }
+    };
+
+    fetchUser(); // マウント時にユーザデータを取得
+  }, []); // 依存配列を空にすることでコンポーネントマウント時にのみ実行
 
   const handleSend = async (e: FormEvent) => {
     e.preventDefault();
@@ -27,7 +45,7 @@ export const Chat = () => {
 
     await postMessage({
       receiver_id: receiverUserID,
-      sender_id: user.id,
+      sender_id: sendUserID,
       content,
     });
     setContent("");
@@ -35,9 +53,9 @@ export const Chat = () => {
   };
 
   const refreshMessages = async () => {
-    if (user.id) {
-      const sentData = await getPostMessages({ user_id: user.id });
-      const receivedData = await getSendMessages({ user_id: user.id });
+    if (sendUserID) {
+      const sentData = await getPostMessages({ user_id: sendUserID });
+      const receivedData = await getSendMessages({ user_id: sendUserID });
 
       const formattedSent = sentData
         ? sentData.map((msg) => ({ ...msg, type: "sent" }))
@@ -56,7 +74,7 @@ export const Chat = () => {
 
   useEffect(() => {
     refreshMessages();
-  }, [user.id]); // user.idが変更された場合にのみ再読み込み
+  }, [sendUserID]); // user.idが変更された場合にのみ再読み込み
 
   return (
     <div className="text-center">

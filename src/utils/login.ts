@@ -1,28 +1,18 @@
 import { supabase } from "./supabase";
 
 import { createChatRoom } from "./makeroom";
-import { useContext } from "react";
-import { AuthContext } from "../hooks/AuthProvider";
 
-export async function CreateChatRoomFunc(
-  userID: string,
-  title: string,
-  about: string,
-  chatRoomType: string,
-  location: string
-) {
+export async function CreateChatRoomFunc(userID: string, title: string, about: string, location: string) {
   // 仮データ
   //   const userID = "1";
   //   const title = "穴場の居酒屋について";
   //   const about = "安くてたくさん飲める居酒屋を探しています";
-  //   const chatRoomType = "group";
 
-  const createRoomData = await createChatRoom(userID, title, about, chatRoomType, location);
+  const createRoomData = await createChatRoom(userID, title, about, location);
   console.log("Created Room:", createRoomData);
 }
 
 export async function handleSocialLogin(provider: any) {
-
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
@@ -51,4 +41,19 @@ export async function getUser() {
   } else {
     return "No User";
   }
+}
+
+export async function getProfile(userId: string) {
+  // userIdをパラメータとして受け取り、それを使ってプロフィール情報を取得
+  const { data: profile, error } = await supabase
+    .from("Profile")
+    .select("*")
+    .eq("UserId", userId)
+    .single();
+  console.log("Profile data", profile);
+  if (error) {
+    console.error("Error fetching profile:", error);
+    return null;
+  }
+  return profile;
 }

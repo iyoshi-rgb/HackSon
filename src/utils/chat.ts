@@ -8,6 +8,7 @@ export const getPostMessages = async ({ user_id }: any) => {
   if (data) {
     return data;
   } else {
+    console.log(error)
     return;
   }
 };
@@ -20,6 +21,7 @@ export const getSendMessages = async ({ user_id }: any) => {
   if (data) {
     return data;
   } else {
+    console.log(error)
     return;
   }
 };

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-
-import { getUser } from "../../utils/user";
-import { getLocation } from "../../utils/user";
 import { useNavigate } from "react-router-dom";
 
+// 型のインポートを省略し、必要な関数もany型とする
+import { getUser, getLocation } from "../../utils/user";
 import {
   getChatRoomDetailsByUserId,
   getMyChatRooms,
@@ -11,129 +10,77 @@ import {
 } from "../../utils/viewroom";
 import { joinChatRoom } from "../../utils/joinroom";
 
-export const Roomlist = () => {
+export const RoomList: React.FC = () => {
   const navigate = useNavigate();
-  const [userLocation, setUserLocation] = useState<string>("");
-  const [chatRoomNames, setChatRoomNames] = useState<string[]>([]);
-  const [myChatRooms, setMyChatRooms] = useState<any[]>([]);
+  const [userLocation, setUserLocation] = useState<any>("");
+  const [chatRoomNames, setChatRoomNames] = useState<any[]>([]);
   const [chatRoomsByLocation, setChatRoomsByLocation] = useState<any[]>([]);
-  const [userId, setUserId] = useState<string | null>(null);
+  const [userId, setUserId] = useState<any>(null);
 
   useEffect(() => {
-    const fetchLocation = async () => {
-      const user = await getUser();
-      if (user?.userId) {
-        const location = await getLocation(user.userId);
-        if (location && location.length > 0 && location[0].Location) {
+    const fetchData = async () => {
+      const user: any = await getUser();
+      if (user && user.userId) {
+        setUserId(user.userId);
+        const location: any = await getLocation(user.userId);
+        if (location?.length > 0 && location[0].Location) {
           setUserLocation(location[0].Location);
         }
-      }
-    };
 
-    const fetchChatRoomIds = async () => {
-      const user = await getUser();
-      setUserId(user?.userId ?? null);
-
-      if (userId) {
-        const roomDetails = await getChatRoomDetailsByUserId(userId);
-        const myRooms = await getMyChatRooms(userId);
-        const roomsByLocation = await getChatRoomsByLocation(userLocation);
-
+        const roomDetails: any = await getChatRoomDetailsByUserId(user.userId);
         if (roomDetails) {
-          // roomDetails から null を除外し、各部屋の Title を抽出して配列にする
-          const roomNames = roomDetails
-            .filter((room) => room !== null)
-            .map((room) => (room ? room.Title : ""));
+          const roomNames: any = roomDetails
+            .map((room: any) => room.Title)
+            .filter((title: any) => !!title);
           setChatRoomNames(roomNames);
-          console.log("roomName", roomNames);
         }
-        if (myRooms) {
-          setMyChatRooms(myRooms);
-          console.log("myRooms", myRooms);
-        }
-        if (roomsByLocation) {
+
+        if (userLocation) {
+          const roomsByLocation: any = await getChatRoomsByLocation(
+            userLocation,
+            user.userId
+          );
           setChatRoomsByLocation(roomsByLocation);
-          console.log("roomsByLocation", roomsByLocation);
         }
       }
     };
 
-    fetchChatRoomIds();
-    fetchLocation();
+    fetchData();
   }, [userId, userLocation]);
 
-  const handleJoinRoom = async (chatRoomId: number) => {
+  const handleJoinRoom = async (chatRoomId: any): Promise<void> => {
     if (userId) {
-      const data = await joinChatRoom(userId, chatRoomId);
+      const data: any = await joinChatRoom(userId, chatRoomId);
       if (data) {
-        navigate(`/room?ChatRoomID=${chatRoomId}`);
+        navigate(`/room/${chatRoomId}`);
       } else {
-        alert("部屋への参加に失敗しました");
+        alert("Failed to join the room");
       }
     }
   };
-  console.log("chatRoomNames", chatRoomNames);
+
   if (!userLocation) {
     return <div>地元を登録してください。</div>;
   }
+
+  const filteredChatRooms = chatRoomsByLocation.filter(
+    (room: any) => !chatRoomNames.includes(room.Title)
+  );
+
   return (
     <>
-      <div className="text-3xl font-bold text-center my-1">Room List</div>
-      <h2 className="text-xl font-semibold text-center my-10">
-        参加している募集部屋
-      </h2>
-      <div className="flex justify-center my-5">
-        <ul className="space-y-4">
-          {chatRoomNames &&
-            chatRoomNames.map((chatRoomId) => (
-              <li key={chatRoomId}>
-                <div className="card w-96 bg-base-100 shadow-md rounded-lg">
-                  <div className="card-body">
-                    <h3 className="card-title text-base">
-                      <button
-                        onClick={() =>
-                          navigate(`/room?ChatRoomID=${chatRoomId}`)
-                        }
-                      >
-                        {chatRoomId}
-                      </button>
-                    </h3>
-                  </div>
-                </div>
-              </li>
-            ))}
-        </ul>
-      </div>
-      <h2 className="text-xl font-semibold text-center my-10">
-        自分が作成した部屋
+      <div className="text-2xl font-bold text-center my-5">募集中の部屋</div>
+      <h2 className="text-lg font-semibold text-center my-10">
+        {userLocation} の 部屋
       </h2>
       <div className="flex justify-center">
         <ul className="space-y-4">
-          {myChatRooms.map((room) => (
-            <li key={room.ChatRoomID}>
-              <div className="card w-96 bg-base-100 shadow-md rounded-lg">
-                <div className="card-body">
-                  <h3
-                    className="card-title clickable text-base"
-                    onClick={() =>
-                      navigate(`/room?ChatRoomID=${room.ChatRoomID}`)
-                    }
-                  >
-                    {room.Title}
-                  </h3>
-                  <p className="text-xs">{room.About}</p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <h2 className="text-xl font-semibold text-center my-10">
-        {userLocation}の部屋
-      </h2>
-      <div className="flex justify-center">
-        <ul className="space-y-4">
-          {chatRoomsByLocation.map((room) => (
+          {filteredChatRooms.length === 0 && (
+            <div className="text-center text-base font-semibold ">
+              現在募集中の部屋はありません
+            </div>
+          )}
+          {filteredChatRooms.map((room: any) => (
             <li key={room.ChatRoomID}>
               <div className="card w-96 bg-base-100 shadow-md rounded-lg">
                 <div className="card-body">
@@ -145,7 +92,7 @@ export const Roomlist = () => {
                   </h3>
                   <p className="text-xs">{room.About}</p>
                   <button onClick={() => handleJoinRoom(room.ChatRoomID)}>
-                    参加する
+                    Join
                   </button>
                 </div>
               </div>

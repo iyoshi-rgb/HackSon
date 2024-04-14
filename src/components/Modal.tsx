@@ -37,7 +37,11 @@ const Modal = ({ isVisible, onClose, profile, onUpdate }: ModalProps) => {
     if (name === "userImage" && e.target.files) {
       // 複数のファイルをサポートするために、URL.createObjectURLを使用してファイルを読み込む
       const fileArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
-      setEditedProfile((prev) => ({ ...prev, userImage: [...(prev.userImage || []), ...fileArray] }));
+      setEditedProfile((prev) => {
+        const updatedProfile = { ...prev, userImage: [...(prev.userImage || []), ...fileArray] };
+        console.log("Updated userImage array:", updatedProfile.userImage); // userImage配列の内容をコンソールに出力
+        return updatedProfile;
+      });
     } else {
       setEditedProfile((prev) => ({ ...prev, [name]: value }));
     }
@@ -78,27 +82,22 @@ const Modal = ({ isVisible, onClose, profile, onUpdate }: ModalProps) => {
       return;
     }
 
-    try {
-      // editedProfileには、ユーザーがフォームで入力したプロファイル情報が含まれています。
-      // ここでは、editedProfileの情報をもとにデータベースを更新します。
-      const result = await updateProfile(editedProfile.userId, {
-        userId: editedProfile.userId,
-        userName: editedProfile.userName,
-        bio: editedProfile.bio,
-        userImage: editedProfile.userImage?.join(","), // userImageがstring[]型なので、stringに変換
-        favoriteSpot: editedProfile.favoriteSpot,
-        location: editedProfile.location,
-      });
+    // userImageが配列型なので、これをカンマ区切りの文字列に変換します。
+    // 実際のアプリケーションでは、ここで画像をアップロードしてURLを取得する処理が必要です。
+    const userImageString = editedProfile.userImage?.join(",") || "";
 
-      if (result) {
-        console.log("プロファイルが更新されました。", result);
-        onClose(); // 更新が成功したらモーダルを閉じる
-        window.location.reload();
-      } else {
-        console.error("プロファイルの更新に失敗しました。");
-      }
-    } catch (error) {
-      console.error("データベースの更新中にエラーが発生しました。", error);
+    // editedProfileの情報をもとにデータベースを更新します。
+    const result = await updateProfile(editedProfile.userId, {
+      ...editedProfile,
+      userImage: userImageString, // 更新された画像URLの文字列を使用
+    });
+
+    if (result) {
+      console.log("プロファイルが更新されました。", result);
+      onClose(); // 更新が成功したらモーダルを閉じる
+      window.location.reload(); // ページをリロードして変更を反映
+    } else {
+      console.error("プロファイルの更新に失敗しました。");
     }
   };
 
@@ -209,7 +208,11 @@ const Modal = ({ isVisible, onClose, profile, onUpdate }: ModalProps) => {
           </div>
 
           <div className="text-sm text-red-400">注意：位置情報は一度選択すると変更できません</div>
-          <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">
+          <button
+            onClick={onClose}
+            type="submit"
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+          >
             更新
           </button>
         </form>

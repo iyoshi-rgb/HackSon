@@ -4,6 +4,8 @@ import { handleSocialLogin } from "../utils/login";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../hooks/AuthProvider";
 import { Logout } from "../utils/logout";
+import { CircleUserRound } from "lucide-react";
+import { MessageSquareText, NotebookText, NotebookPen } from "lucide-react";
 
 export const Header = () => {
   // useContext から isLoggedIn と setIsLoggedIn を正しく取得
@@ -21,98 +23,144 @@ export const Header = () => {
         <header className="flex items-center justify-between py-4">
           <Link
             to="/"
-            className="inline-flex items-center gap-2.5 text-2xl font-bold text-black md:text-3xl"
+            className="inline-flex items-center gap-2.5 text-lg pl-3 font-bold text-black md:text-lg font-sans mx-4"
             aria-label="logo"
           >
             <svg
-              width="95"
-              height="94"
-              viewBox="0 0 95 94"
-              className="h-auto w-6 text-indigo-500"
-              fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"
+              width="50"
+              height="50"
+              viewBox="0 0 24 24"
+              fill="#fcc800"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              className="lucide lucide-heart-handshake"
             >
-              <path d="M96 0V47L48 94H0V47L48 0H96Z" />
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+              <path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08v0c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66" />
+              <path d="m18 15-2-2" />
+              <path d="m15 18-2-2" />
             </svg>
             まちわたし
           </Link>
 
-          <div className="flex flex-1 items-center justify-center hidden lg:flex">
-            <nav className="flex justify-center gap-12">
-              <Link
+          <div className="flex-1 items-center  hidden lg:flex">
+            <nav className="flex-1 flex gap-5">
+              {/* <Link
                 to="/"
-                className="inline-flex items-center gap-1 text-lg font-semibold hover:text-indigo-500 active:text-indigo-700"
-              >
-                Home
-              </Link>
-              <Link
-                to="/roomlist"
-                className="inline-flex items-center gap-1 text-lg font-semibold hover:text-indigo-500 active:text-indigo-700"
-              >
-                部屋一覧
-              </Link>
-            </nav>
-          </div>
-
-          <div className="flex items-center gap-4">
-            {isLoggedIn ? (
-              <button onClick={handleLogout} className="btn btn-neutral">
-                ログアウト
-              </button>
-            ) : (
-              <GoogleButton handleClickMethod={handleSocialLogin} />
-            )}
-            {isLoggedIn && (
-              <Link to="/profile">
-                <button className="inline-flex items-center gap-2 text-white px-4 py-2 rounded-md ">
-                  <div className="avatar placeholder">
-                    <div className="bg-neutral text-neutral-content rounded-full w-20">
-                      <span className="">D</span>
-                    </div>
-                  </div>
-                </button>
-              </Link>
-            )}
-          </div>
-
-          <div className="dropdown lg:hidden">
-            <div tabIndex={0} role="button" className="m-1">
-              <button
-                type="button"
-                className="inline-flex items-center rounded-lg bg-gray-200 px-2.5 py-2 text-sm font-semibold text-gray-500 ring-indigo-300 hover:bg-gray-300 focus-visible:ring active:text-gray-700 md:text-base"
+                className="inline-flex items-center gap-1 pl-5 hover:text-blue-700 active:text-blue-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+                  width="35"
+                  height="35"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  className="lucide lucide-home"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4 a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4 a1 1 0 01-1-1z"
-                    clipRule="evenodd"
-                  />
+                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                  <polyline points="9 22 9 12 15 12 15 22" />
                 </svg>
-                Menu
-              </button>
-            </div>
-            <ul
-              tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-            >
-              <Link to="/">
-                <li>Home</li>
+              </Link> */}
+              <Link
+                to={"/roomlist"}
+                className="inline-flex items-center gap-1 text-sm font-semibold mx-2 hover:text-blue-700 active:text-indigo-700"
+              >
+                募集中の部屋
               </Link>
-              <Link to="/roomlist">
-                <li>部屋一覧</li>
+              <Link
+                to={"/myRooms"}
+                className="inline-flex items-center gap-1 text-sm font-semibold mx-2 hover:text-blue-700 active:text-indigo-700"
+              >
+                参加済みの部屋
               </Link>
-              {isLoggedIn && (
-                <Link to="/profile">
-                  <li>Profile</li>
-                </Link>
+              <Link
+                to={"/makeroom"}
+                className="inline-flex items-center gap-1 text-sm font-semibold mx-2 hover:text-blue-700 active:text-indigo-700"
+              >
+                募集部屋を作る
+              </Link>
+            </nav>
+
+            <div className="flex items-center gap-4 pl-5">
+              {isLoggedIn ? (
+                <button
+                  onClick={handleLogout}
+                  className="btn bg-blue-700 text-white rounded-m hover:bg-white hover:text-blue-700 hover:border-blue-700 hover:border-2"
+                >
+                  ログアウト
+                </button>
+              ) : (
+                <GoogleButton handleClickMethod={handleSocialLogin} />
               )}
-            </ul>
+              <details className="dropdown">
+                <summary className="m-1 btn mr-10">
+                  <svg
+                    className="swap-off fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 512 512"
+                  >
+                    <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+                  </svg>
+                </summary>
+                <ul className="dropdown-content z-[1] menu p-2 font-semibold shadow bg-base-100 rounded-box ">
+                  <Link to={"/profile"} className="flex flex-row items-center">
+                    <CircleUserRound />
+                    <li className="p-2">マイページ</li>
+                  </Link>
+                  <Link to={"/myRooms"} className="flex flex-row items-center">
+                    <NotebookText />
+                    <li className="p-2">参加済みの部屋</li>
+                  </Link>
+                  <Link
+                    to={"/createdroom"}
+                    className="flex flex-row items-center"
+                  >
+                    <NotebookPen />
+                    <li className="p-2">作成した部屋</li>
+                  </Link>
+
+                </ul>
+              </details>
+            </div>
           </div>
+
+          <details className="dropdown lg:hidden">
+            <summary className="m-1 btn">
+              <svg
+                className="swap-off fill-current"
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 512 512"
+              >
+                <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+              </svg>
+              Menu
+            </summary>
+            <ul className="dropdown-content z-[1] menu p-2 font-semibold shadow bg-base-100 rounded-box ">
+              <Link to={"/profile"} className="flex flex-row items-center">
+                <CircleUserRound />
+                <li className="p-2">Mypage</li>
+              </Link>
+              <Link to={"/myRooms"} className="flex flex-row items-center">
+                <NotebookText />
+                <li className="p-2">参加済みの部屋</li>
+              </Link>
+              <Link to={"/makeroom"} className="flex flex-row items-center">
+                <NotebookPen />
+                <li className="p-2">作成した部屋</li>
+              </Link>
+            </ul>
+          </details>
         </header>
       </div>
     </div>
