@@ -21,7 +21,7 @@ export const Header = () => {
         <header className="flex items-center justify-between py-4">
           <Link
             to="/"
-            className="inline-flex items-center gap-2.5 text-2xl font-bold text-black md:text-3xl"
+            className="inline-flex items-center gap-2.5 text-2xl  pl-3 font-bold text-black md:text-3xl"
             aria-label="logo"
           >
             <svg
@@ -37,42 +37,56 @@ export const Header = () => {
             まちわたし
           </Link>
 
-          <div className="flex flex-1 items-center justify-center hidden lg:flex">
-            <nav className="flex justify-center gap-12">
+          <div className="flex-1 items-center  hidden lg:flex">
+            <nav className="flex-1 flex gap-5 ">
               <Link
                 to="/"
-                className="inline-flex items-center gap-1 text-lg font-semibold hover:text-indigo-500 active:text-indigo-700"
+                className="inline-flex items-center gap-1 pl-5 text-lg font-semibold hover:text-cyan-500 active:text-cyan-700"
               >
                 Home
               </Link>
               <Link
                 to="/roomlist"
-                className="inline-flex items-center gap-1 text-lg font-semibold hover:text-indigo-500 active:text-indigo-700"
+                className="inline-flex items-center gap-1 text-lg font-semibold hover:text-cyan-500 active:text-cyan-700"
               >
                 部屋一覧
               </Link>
             </nav>
-          </div>
 
-          <div className="flex items-center gap-4">
-            {isLoggedIn ? (
-              <button onClick={handleLogout} className="btn btn-neutral">
-                ログアウト
-              </button>
-            ) : (
-              <GoogleButton handleClickMethod={handleSocialLogin} />
-            )}
-            {isLoggedIn && (
-              <Link to="/profile">
-                <button className="inline-flex items-center gap-2 text-white px-4 py-2 rounded-md ">
-                  <div className="avatar placeholder">
-                    <div className="bg-neutral text-neutral-content rounded-full w-20">
-                      <span className="">D</span>
-                    </div>
-                  </div>
+            <div className="flex items-center gap-4 pl-5">
+              {isLoggedIn ? (
+                <button onClick={handleLogout} className="btn btn-outline">
+                  ログアウト
                 </button>
-              </Link>
-            )}
+              ) : (
+                <GoogleButton handleClickMethod={handleSocialLogin} />
+              )}
+              <details className="dropdown">
+                <summary className="m-1 btn">
+                  <svg
+                    className="swap-off fill-current"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 512 512"
+                  >
+                    <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
+                  </svg>
+                  Menu
+                </summary>
+                <ul className="dropdown-content z-[1] menu p-2 font-semibold shadow bg-base-100 rounded-box w-52">
+                  <Link to={"/profile"}>
+                    <li className="pb-2">Mypage</li>
+                  </Link>
+                  <Link to={"/roomlist"}>
+                    <li className="pb-2">参加した部屋</li>
+                  </Link>
+                  <Link to={"/makeroom"}>
+                    <li className="pb-2">作成した部屋</li>
+                  </Link>
+                </ul>
+              </details>
+            </div>
           </div>
 
           <div className="dropdown lg:hidden">
