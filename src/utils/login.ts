@@ -2,12 +2,7 @@ import { supabase } from "./supabase";
 
 import { createChatRoom } from "./makeroom";
 
-export async function CreateChatRoomFunc(
-  userID: string,
-  title: string,
-  about: string,
-  location: string
-) {
+export async function CreateChatRoomFunc(userID: string, title: string, about: string, location: string) {
   // 仮データ
   //   const userID = "1";
   //   const title = "穴場の居酒屋について";
@@ -55,7 +50,6 @@ export async function getProfile(userId: string) {
     .select("*")
     .eq("UserId", userId)
     .single();
-
   console.log("Profile data", profile);
   if (error) {
     console.error("Error fetching profile:", error);
