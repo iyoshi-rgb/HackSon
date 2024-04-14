@@ -22,7 +22,7 @@ export const getChatRoomDetailsByUserId = async (userID: string) => {
     roomIdsData.map(async (item) => {
       const { data: detailsData, error: detailsError } = await supabase
         .from("ChatRooms")
-        .select("Title, About")
+        .select("ChatRoomID, Title, About") // IDも取得
         .eq("ChatRoomID", item.ChatRoomID)
         .single(); // ChatRoomIDはユニークなのでsingleを使用
 

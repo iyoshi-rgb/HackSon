@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-
 import { getUser } from "../../utils/user";
 import { getLocation } from "../../utils/user";
 import { useNavigate } from "react-router-dom";
-
 import {
   getChatRoomDetailsByUserId,
   getMyChatRooms,
@@ -12,7 +10,7 @@ import {
 export const MyRoomList = () => {
   const navigate = useNavigate();
   const [userLocation, setUserLocation] = useState<string>("");
-  const [chatRoomNames, setChatRoomNames] = useState<string[]>([]);
+  const [chatRoomDetails, setChatRoomDetails] = useState<any[]>([]);
   const [myChatRooms, setMyChatRooms] = useState<any[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
 
@@ -33,18 +31,12 @@ export const MyRoomList = () => {
 
       if (userId) {
         const roomDetails = await getChatRoomDetailsByUserId(userId);
-        const myRooms = await getMyChatRooms(userId);
-
         if (roomDetails) {
-          const roomNames = roomDetails
-            .filter((room) => room !== null)
-            .map((room) => (room ? room.Title : ""));
-          setChatRoomNames(roomNames);
-          console.log("roomName", roomNames);
+          setChatRoomDetails(roomDetails);
         }
+        const myRooms = await getMyChatRooms(userId);
         if (myRooms) {
           setMyChatRooms(myRooms);
-          console.log("myRooms", myRooms);
         }
       }
     };
@@ -53,10 +45,10 @@ export const MyRoomList = () => {
     fetchLocation();
   }, [userId, userLocation]);
 
-  console.log("chatRoomNames", chatRoomNames);
   if (!userLocation) {
     return <div>地元を登録してください。</div>;
   }
+  console.log("chatRoomDetails", chatRoomDetails);
   return (
     <>
       <div className="text-3xl font-bold text-center my-1">Room List</div>
@@ -65,24 +57,23 @@ export const MyRoomList = () => {
       </h2>
       <div className="flex justify-center my-5">
         <ul className="space-y-4">
-          {chatRoomNames &&
-            chatRoomNames.map((chatRoomId) => (
-              <li key={chatRoomId}>
-                <div className="card w-96 bg-base-100 shadow-md rounded-lg">
-                  <div className="card-body">
-                    <h3 className="card-title text-base">
-                      <button
-                        onClick={() =>
-                          navigate(`/room?ChatRoomID=${chatRoomId}`)
-                        }
-                      >
-                        {chatRoomId}
-                      </button>
-                    </h3>
-                  </div>
+          {chatRoomDetails.map((room) => (
+            <li key={room.ChatRoomID}>
+              <div className="card w-96 bg-base-100 shadow-md rounded-lg">
+                <div className="card-body">
+                  <h3
+                    className="card-title text-base clickable"
+                    onClick={() =>
+                      navigate(`/room?ChatRoomID=${room.ChatRoomID}`)
+                    }
+                  >
+                    {room.Title}
+                  </h3>
+                  <p className="text-xs">{room.About}</p>
                 </div>
-              </li>
-            ))}
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
       <h2 className="text-xl font-semibold text-center my-10">
