@@ -86,6 +86,7 @@ export const Profile = () => {
         }
         onUpdate={handleUpdateProfile}
       />
+      <div className="card  bg-neutral text-neutral-content shadow-xl">
       <div className="w-full h-24 bg-slate-400 flex">
         <button onClick={handleLogout} className="btn btn-neutral">
           ログアウト
@@ -97,7 +98,7 @@ export const Profile = () => {
             ))
           ) : (
             <img
-              className="mt-3 h-10 w-10 mr-4 rounded-full"
+              className="w-30 mr-4 rounded-full"
               src={Array.isArray(profile?.userImage) ? profile?.userImage[0] : profile?.userImage || "default.png"}
               alt="画像"
             />
@@ -125,6 +126,7 @@ export const Profile = () => {
             <div>{profile?.favoriteSpot || "未設定"}</div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );
