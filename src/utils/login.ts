@@ -1,8 +1,6 @@
 import { supabase } from "./supabase";
 
 import { createChatRoom } from "./makeroom";
-import { useContext } from "react";
-import { AuthContext } from "../hooks/AuthProvider";
 
 export async function CreateChatRoomFunc(
   userID: string,
