@@ -16,6 +16,7 @@ import { MyRoomList } from "./pages/views/myRooms";
 import { UserProvider } from "./hooks/UserProvider";
 import { LocationProvider } from "./hooks/LocationProvider";
 import { AuthProvider } from "./hooks/AuthProvider";
+import { Createdroom } from "./pages/views/createdroom";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -28,6 +29,7 @@ root.render(
           <Router>
             <Header />
             <Routes>
+              <Route path="/createdroom" element={<Createdroom />} />
               <Route path="/" element={<Login />} />
               <Route path="makeroom" element={<Makeroom />} />
               <Route path="/room" element={<Room />} />

@@ -7,7 +7,7 @@ import {
   getMyChatRooms,
 } from "../../utils/viewroom";
 
-export const MyRoomList = () => {
+export const Createdroom = () => {
   const navigate = useNavigate();
   const [userLocation, setUserLocation] = useState<string>("");
   const [chatRoomDetails, setChatRoomDetails] = useState<any[]>([]);
@@ -50,19 +50,19 @@ export const MyRoomList = () => {
   }
   console.log("chatRoomDetails", chatRoomDetails);
   return (
-    <>
-      <div className="text-3xl font-bold text-center my-1">Room List</div>
+    <div>
+      {" "}
       <h2 className="text-xl font-semibold text-center my-10">
-        参加済みの部屋
+        自分が作成した部屋
       </h2>
-      <div className="flex justify-center my-5">
+      <div className="flex justify-center">
         <ul className="space-y-4">
-          {chatRoomDetails.map((room) => (
+          {myChatRooms.map((room) => (
             <li key={room.ChatRoomID}>
               <div className="card w-96 bg-base-100 shadow-md rounded-lg">
                 <div className="card-body">
                   <h3
-                    className="card-title text-base clickable"
+                    className="card-title clickable text-base"
                     onClick={() =>
                       navigate(`/room?ChatRoomID=${room.ChatRoomID}`)
                     }
@@ -76,6 +76,6 @@ export const MyRoomList = () => {
           ))}
         </ul>
       </div>
-    </>
+    </div>
   );
 };

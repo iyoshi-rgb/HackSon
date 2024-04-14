@@ -97,7 +97,10 @@ export const Header = () => {
                     <NotebookText />
                     <li className="p-2">参加した部屋</li>
                   </Link>
-                  <Link to={"/makeroom"} className="flex flex-row items-center">
+                  <Link
+                    to={"/createdroom"}
+                    className="flex flex-row items-center"
+                  >
                     <NotebookPen />
                     <li className="p-2">作成した部屋</li>
                   </Link>
