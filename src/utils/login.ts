@@ -18,7 +18,6 @@ export async function CreateChatRoomFunc(
 }
 
 export async function handleSocialLogin(provider: any) {
-
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
@@ -52,11 +51,12 @@ export async function getUser() {
 export async function getProfile(userId: string) {
   // userIdをパラメータとして受け取り、それを使ってプロフィール情報を取得
   const { data: profile, error } = await supabase
-    .from("profiles")
+    .from("Profile")
     .select("*")
-    .eq("userId", userId)
+    .eq("UserId", userId)
     .single();
 
+  console.log("Profile data", profile);
   if (error) {
     console.error("Error fetching profile:", error);
     return null;

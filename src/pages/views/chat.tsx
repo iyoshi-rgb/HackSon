@@ -1,4 +1,3 @@
-
 import React, { useContext, useEffect, useState, FormEvent } from "react";
 import { UserContext } from "../../hooks/UserProvider";
 import { UseUserIdContext } from "../../hooks/UserIdProvider";
@@ -12,14 +11,15 @@ import {
 interface Message {
   sender_id: string;
   content: string;
-  type: "sent" | "received"; // 送信されたメッセージか受信したメッセージかを区別するためのタイプ
+  type: "sent" | "received";
 }
 
 export const Chat = () => {
-  const { receiverUserID, setReceiverUserID } = UseUserIdContext(); // UseUserIdContext を使用
+  const { receiverUserID, setReceiverUserID } = UseUserIdContext();
 
   const [content, setContent] = useState<string>("");
   const { user } = useContext(UserContext);
+  console.log("user", user.id);
   const [messages, setMessages] = useState<Message[]>([]);
 
   const handleSend = async (e: FormEvent) => {
