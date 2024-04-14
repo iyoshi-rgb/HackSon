@@ -61,16 +61,16 @@ export const Room = () => {
   }, [ChatRoomID]);
 
   const handleSendMessage = async (e: any) => {
-    e.preventDefault(); // フォームのデフォルト送信動作を防止
+    e.preventDefault();
 
-    const message = e.target.elements.messageInput.value; // inputのname属性を使用して値にアクセス
+    const message = e.target.elements.messageInput.value;
     console.log(message);
     if (ChatRoomID) {
       const result = await makemessage(user.id, message, Number(ChatRoomID));
       console.log(result);
       const data = await getMessage(Number(ChatRoomID));
       setMessage(data);
-      console.log("message", message);
+      // console.log("message", message);
     }
   };
   const handleSelectUserId = (userId: string) => {
@@ -80,56 +80,58 @@ export const Room = () => {
   };
 
   return (
-    <div className="text-center">
-      <div className="flex flex-col items-center w-full">
-        <div className="text-2xl font-bold text-center my-4">Room</div>
-        {message.map((mes: any, index: number) => (
-          <div
-            className={`chat ${
-              user.id === mes.UserID ? "chat-end" : "chat-start"
-            } w-4/5 `}
-            key={index}
-          >
-            {mes.Message}
-          </div>
-        ))}
+    <div className="flex h-full">
+      <div className="w-1/4 bg-gray-100 p-4 h-full overflow-y-auto">
+        <div className="text-xl font-bold">ユーザー一覧</div>
+        <ul className="space-y-2 mt-4">
+          {joinUsersProfiles &&
+            joinUsersProfiles.map((profile) => (
+              <li
+                key={profile.UserId}
+                className="card bg-base-100 rounded-lg p-2"
+              >
+                <h3
+                  className="cursor-pointer"
+                  onClick={() => handleSelectUserId(profile.UserId)}
+                >
+                  {profile.UserName ? profile.UserName : profile.UserId}
+                </h3>
+              </li>
+            ))}
+        </ul>
       </div>
-      <form onSubmit={handleSendMessage} className="mt-4">
-        <textarea
-          name="messageInput"
-          value={sendMessage}
-          onChange={(e) => setSendMessage(e.target.value)}
-          className="textarea textarea-bordered textarea-lg w-full max-w-xs"
-        />
-        <button className="btn btn-neutral mt-2" type="submit">
-          Send
-        </button>
-      </form>
-      <div className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg">
-        <div className="mb-4">
-          <h2 className="text-xl font-semibold text-center my-10">
-            参加しているユーザー
-          </h2>
-          <div className="flex justify-center my-5">
-            <ul className="space-y-4">
-              {joinUsersProfiles &&
-                joinUsersProfiles.map((profile) => (
-                  <li key={profile.UserId}>
-                    <div className="card w-96 bg-base-100 shadow-md rounded-lg">
-                      <div className="card-body">
-                        <h3
-                          className="card-title text-base cursor-pointer"
-                          onClick={() => handleSelectUserId(profile.UserId)}
-                        >
-                          {profile.UserName ? profile.UserName : profile.UserId}
-                        </h3>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-            </ul>
-          </div>
+
+      <div className="flex flex-col flex-1 overflow-hidden">
+        <div className="flex-1 overflow-y-auto p-4">
+          <div className="text-2xl font-bold text-center">Room</div>
+          {message.map((mes: any, index: number) => (
+            <div
+              className={`chat ${
+                user.id === mes.UserID ? "chat-end" : "chat-start"
+              } w-4/5 mx-auto my-2 bg-white rounded-lg p-2 shadow`}
+              key={index}
+            >
+              {mes.Message}
+            </div>
+          ))}
         </div>
+        <form
+          onSubmit={handleSendMessage}
+          className="sticky bottom-0 p-4 bg-white shadow-lg w-full flex items-center"
+        >
+          <textarea
+            name="messageInput"
+            value={sendMessage}
+            onChange={(e) => setSendMessage(e.target.value)}
+            className="textarea textarea-bordered textarea-sm w-3/5 mx-20"
+          ></textarea>
+          <button
+            className="btn btn-primary bg-blue-700 text-white rounded-m hover:bg-white hover:text-blue-700 hover:border-blue-700 hover:border-2 "
+            type="submit"
+          >
+            Send
+          </button>
+        </form>
       </div>
     </div>
   );
