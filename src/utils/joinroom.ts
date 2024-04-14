@@ -2,7 +2,9 @@ import { supabase } from "./supabase";
 
 // チャットルームにユーザーを登録する関数
 export const joinChatRoom = async (userId: string, chatRoomId: number) => {
-  const { data, error } = await supabase
+  const {data: user} = await supabase.from("ChatRoomMembers").select(userId).eq('ChatRoomID',chatRoomId)
+  if(!user){
+    const { data, error } = await supabase
     .from("ChatRoomMembers")
     .insert([
       {
@@ -18,4 +20,9 @@ export const joinChatRoom = async (userId: string, chatRoomId: number) => {
     return false;
   }
   return data;
+
+  }else{
+    return
+  }
+  
 };

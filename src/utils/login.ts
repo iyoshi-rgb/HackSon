@@ -45,8 +45,12 @@ export async function getUser() {
 
 export async function getProfile(userId: string) {
   // userIdをパラメータとして受け取り、それを使ってプロフィール情報を取得
-  const { data: profile, error } = await supabase.from("profiles").select("*").eq("userId", userId).single();
-
+  const { data: profile, error } = await supabase
+    .from("Profile")
+    .select("*")
+    .eq("UserId", userId)
+    .single();
+  console.log("Profile data", profile);
   if (error) {
     console.error("Error fetching profile:", error);
     return null;
