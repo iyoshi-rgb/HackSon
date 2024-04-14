@@ -70,7 +70,6 @@ export const Room = () => {
       console.log(result);
       const data = await getMessage(Number(ChatRoomID));
       setMessage(data);
-      // console.log("message", message);
     }
   };
   const handleSelectUserId = (userId: string) => {

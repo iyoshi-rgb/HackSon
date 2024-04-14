@@ -116,9 +116,9 @@ export const Header = () => {
                     <CircleUserRound />
                     <li className="p-2">マイページ</li>
                   </Link>
-                  <Link to={"/roomlist"} className="flex flex-row items-center">
+                  <Link to={"/myRooms"} className="flex flex-row items-center">
                     <NotebookText />
-                    <li className="p-2">参加した部屋</li>
+                    <li className="p-2">参加済みの部屋</li>
                   </Link>
                   <Link
                     to={"/createdroom"}
@@ -151,9 +151,9 @@ export const Header = () => {
                 <CircleUserRound />
                 <li className="p-2">Mypage</li>
               </Link>
-              <Link to={"/roomlist"} className="flex flex-row items-center">
+              <Link to={"/myRooms"} className="flex flex-row items-center">
                 <NotebookText />
-                <li className="p-2">参加した部屋</li>
+                <li className="p-2">参加済みの部屋</li>
               </Link>
               <Link to={"/makeroom"} className="flex flex-row items-center">
                 <NotebookPen />

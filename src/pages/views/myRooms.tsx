@@ -49,7 +49,7 @@ export const MyRoomList = () => {
 
   const handleJoinRoom = async (chatRoomId: any): Promise<void> => {
     if (userId) {
-      navigate(`/room/${chatRoomId}`);
+      navigate(`/room?ChatRoomID=${room.ChatRoomID}`);
     } else {
       alert("Failed to join the room");
     }
@@ -77,7 +77,11 @@ export const MyRoomList = () => {
                     {room.Title}
                   </h3>
                   <p className="text-xs">{room.About}</p>
-                  <button onClick={() => handleJoinRoom(room.ChatRoomID)}>
+                  <button
+                    onClick={() =>
+                      navigate(`/room?ChatRoomID=${room.ChatRoomID}`)
+                    }
+                  >
                     見る
                   </button>
                 </div>
