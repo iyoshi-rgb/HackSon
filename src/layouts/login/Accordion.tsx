@@ -9,7 +9,8 @@ const Accordion = () => {
           旅行先の人と話せる！
         </div>
         <div className="collapse-content">
-          <p>具体的な機能書く</p>
+          <p>旅行先のおすすめスポットを地元の人から直接きけちゃう！</p>
+          <p>地元の人しか知らない穴場が見つかるかも！？</p>
         </div>
       </div>
       <div className="collapse bg-gray-200 mb-5">

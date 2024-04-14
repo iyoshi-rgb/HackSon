@@ -115,7 +115,7 @@ export const Header = () => {
                 <ul className="dropdown-content z-[1] menu p-2 font-semibold shadow bg-base-100 rounded-box ">
                   <Link to={"/profile"} className="flex flex-row items-center">
                     <CircleUserRound />
-                    <li className="p-2">Mypage</li>
+                    <li className="p-2">マイページ</li>
                   </Link>
                   <Link to={"/roomlist"} className="flex flex-row items-center">
                     <NotebookText />
@@ -131,7 +131,7 @@ export const Header = () => {
                   {isLoggedIn && (
                     <Link to={"/chat"} className="flex flex-row items-center">
                       <MessageSquareText />
-                      <li className="p-2">chat</li>
+                      <li className="p-2">チャット</li>
                     </Link>
                   )}
                 </ul>
@@ -168,7 +168,7 @@ export const Header = () => {
               {isLoggedIn && (
                 <Link to={"/chat"} className="flex flex-row items-center">
                   <MessageSquareText />
-                  <li className="p-2">chat</li>
+                  <li className="p-2">チャット</li>
                 </Link>
               )}
             </ul>
