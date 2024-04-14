@@ -7,6 +7,8 @@ import {
   getMyChatRooms,
 } from "../../utils/viewroom";
 
+import { joinChatRoom } from "../../utils/joinroom";
+
 export const MyRoomList = () => {
   const navigate = useNavigate();
   const [userLocation, setUserLocation] = useState<string>("");
@@ -45,6 +47,14 @@ export const MyRoomList = () => {
     fetchLocation();
   }, [userId, userLocation]);
 
+  const handleJoinRoom = async (chatRoomId: any): Promise<void> => {
+    if (userId) {
+      navigate(`/room/${chatRoomId}`);
+    } else {
+      alert("Failed to join the room");
+    }
+  };
+
   if (!userLocation) {
     return <div>地元を登録してください。</div>;
   }
@@ -67,6 +77,9 @@ export const MyRoomList = () => {
                     {room.Title}
                   </h3>
                   <p className="text-xs">{room.About}</p>
+                  <button onClick={() => handleJoinRoom(room.ChatRoomID)}>
+                    見る
+                  </button>
                 </div>
               </div>
             </li>
