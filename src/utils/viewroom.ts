@@ -58,12 +58,16 @@ export const getMyChatRooms = async (userID: string) => {
   return data;
 };
 
-export const getChatRoomsByLocation = async (location: string) => {
+export const getChatRoomsByLocation = async (
+  location: string,
+  userID: string
+) => {
+  // データベースから特定の場所にある、特定のユーザーIDと一致しないチャットルームを取得
   const { data, error } = await supabase
     .from("ChatRooms")
     .select("*")
     .eq("Location", location)
-    .select();
+    .neq("UserID", userID); // UserIDが引数と一致しないレコードに絞り込む
 
   console.log("getChatRoomsByLocation", data);
   if (error) {

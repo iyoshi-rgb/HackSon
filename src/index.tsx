@@ -11,6 +11,8 @@ import { Chat } from "./pages/views/chat";
 import { Makeroom } from "./pages/views/makeroom";
 import { Header } from "./layouts/Header";
 import { Room } from "./pages/views/room";
+import { MyRoomList } from "./pages/views/myRooms";
+// import { UserIdContext } from "./hooks/UserIdProvider";
 import { UserProvider } from "./hooks/UserProvider";
 import { LocationProvider } from "./hooks/LocationProvider";
 import { AuthProvider } from "./hooks/AuthProvider";
@@ -29,6 +31,7 @@ root.render(
               <Route path="/" element={<Login />} />
               <Route path="makeroom" element={<Makeroom />} />
               <Route path="/room" element={<Room />} />
+              <Route path="/myRooms" element={<MyRoomList />} />
               <Route path="/roomlist" element={<Roomlist />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/chat" element={<Chat />} />
