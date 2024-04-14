@@ -60,7 +60,7 @@ export const updateProfile = async (userId: string, updatedProfile: ProfileProps
 
 export async function getProfile(userId: string) {
   // userIdをパラメータとして受け取り、それを使ってプロフィール情報を取得
-  const { data: profile, error } = await supabase.from("profiles").select("*").eq("userId", userId).single();
+  const { data: profile, error } = await supabase.from("Profile").select("*").eq("UserId", userId).single();
 
   if (error) {
     console.error("Error fetching profile:", error);

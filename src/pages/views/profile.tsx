@@ -20,33 +20,28 @@ interface ProfileProps {
 export const Profile = () => {
   const [showModal, setShowModal] = useState(false);
   const [profile, setProfile] = useState<ProfileProps | null>(null);
-
+  const [userName, setUserName] = useState<string>("");
   const { user } = useContext(UserContext);
-  const { location, setLocation } = useContext(LocationContext);
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
 
   const navigate = useNavigate();
-
   useEffect(() => {
-    async function fetchProfile() {
-      if (user) {
-        // ユーザーIDを使用してプロフィール情報を取得
-        const profileData = await getProfile(user.userId);
-        if (profileData) {
-          // プロフィール情報を状態にセット
-          setProfile({
-            userId: user.userId,
-            bio: profileData.bio,
-            userImage: profileData.userImage,
-            favoriteSpot: profileData.favoriteSpot,
-            location: profileData.location,
-          });
+    async function fetchData() {
+      const userData = await getUser(); // getUserName の戻り値を直接分割代入しない
+
+      if (userData) {
+        // userDataがundefinedまたはnullでないことを確認
+        const { userId, userName } = userData; // ここで分割代入
+        if (userId) {
+          const profileData = await getProfile(userId);
+          setProfile(profileData);
+          setUserName(userName || ""); // userNameがundefinedの場合はデフォルトで空文字列を設定
         }
+      } else {
+        console.log("ユーザーがログインしていません");
       }
     }
-
-    fetchProfile();
-  }, [user]);
+    fetchData();
+  }, []);
 
   const handleUpdateProfile = async (updatedProfile: ProfileProps) => {
     if (profile?.userId) {
@@ -82,7 +77,7 @@ export const Profile = () => {
         profile={
           profile || {
             userId: user?.userId || "",
-            userName: "",
+            userName: user?.userName || "",
             bio: "",
             userImage: [], // 空の配列として初期化
             favoriteSpot: "",
@@ -108,9 +103,9 @@ export const Profile = () => {
             />
           )}
           <div className="flex flex-col">
-            <div className="text-xl font-medium">{profile?.userName}</div>
+            <div className="text-xl font-medium">{userName}</div>
             <div>
-              <div>{profile?.location || "未設定"}</div>
+              <div>地元：{profile?.location || "未設定"}</div>
             </div>
           </div>
           <button onClick={() => setShowModal(true)} className="mt-2 mx-4 btn btn-active">
@@ -134,43 +129,3 @@ export const Profile = () => {
     </>
   );
 };
-
-// <div className="">
-// <div className="w-full h-24 bg-slate-400 flex">
-//   <button onClick={handleLogout} className="btn btn-neutral">
-//     Logout
-//   </button>
-//   <div className="flex justify-center w-4/5">
-//     {profile.userImage &&
-//                 profile.userImage.map((image: any, index: any) => (
-//                   <img key={index} src={image} alt="Profile" className="profile-image" />
-//                 ))}
-//     <div className="flex flex-col">
-//       <div className="text-xl font-medium">{userName}</div>
-//       <div>
-//         <div>{profile?.location || "未設定"}</div>
-
-//         {/* いいね機能の追加 */}
-//         {/* <div>{profile.likes}</div> */}
-//       </div>
-//     </div>
-//     <button onClick={() => setShowModal(true)} className="mt-2 mx-4  btn btn-active">
-//       編集する
-//     </button>
-//   </div>
-// </div>
-
-// {/* 一言コメントとおすすめスポットを表示 */}
-// <div className="h-full flex flex-col items-center px-8">
-//   <div className="w-1/2">
-//     <div className="mt-4 mb-10">
-//       <div className="text-xl font-semibold ">ひとこと</div>
-//       <div>{profile?.bio || "未設定"}</div>
-//     </div>
-//     <div className="mt-4 mb-10">
-//       <div className="text-xl font-semibold">おすすめスポット</div>
-//       <div className="">{profile?.favoriteSpot || "未設定"}</div>
-//     </div>
-//   </div>
-// </div>
-// </div>
