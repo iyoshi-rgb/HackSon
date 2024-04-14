@@ -1,12 +1,12 @@
 import { supabase } from "./supabase";
 
 export const makemessage = async (
-    userID:String,
-    message:String,
-    chatRoomID:Number,
+    userID:string,
+    message:string,
+    chatRoomID:number,
 ) =>{
     const { data, error } = await supabase
-    .from("Messages")
+    .from("GroupChat")
     .insert([
       {
         UserID: userID,
@@ -18,19 +18,23 @@ export const makemessage = async (
 
   // エラーチェック
   if (error) {
-    console.error("Error inserting data", error);
-    return null;
+
+    return [];
   }
 
   return data;
 };
 
 export const getMessage = async (id:number) => {
-    const messages = (
+    const {data} = 
       await supabase
-        .from("Messages")
+        .from("GroupChat")
         .select("*")
         .eq("ChatRoomID",id)
-    )
-    return messages.data;
+    
+    if(data){
+        return data;
+    }else {    
+        return [];
+     }
   };
