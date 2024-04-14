@@ -10,7 +10,6 @@ export const Makeroom = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [about, setAbout] = useState("");
-  const [chatRoomType, setChatRoomType] = useState("group");
   const [location, setLocation] = useState("");
 
   useEffect(() => {
@@ -27,16 +26,9 @@ export const Makeroom = () => {
   }, []);
 
   const handleCreateRoom = async () => {
-    createRoomData = await createChatRoom(
-      userId,
-      title,
-      about,
-      chatRoomType,
-      location
-    );
+    createRoomData = await createChatRoom(userId, title, about, location);
     setTitle("");
     setAbout("");
-    setChatRoomType("group");
     setLocation("");
     console.log(createRoomData);
     if (createRoomData && createRoomData.length > 0) {
