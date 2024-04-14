@@ -86,7 +86,7 @@ export const Profile = () => {
         }
         onUpdate={handleUpdateProfile}
       />
-      <div className="card  bg-neutral text-neutral-content shadow-xl">
+      <div className="card flex bg-neutral text-neutral-content  shadow-xl">
       <div className="w-full h-24 bg-slate-400 flex">
         <button onClick={handleLogout} className="btn btn-neutral">
           ログアウト
@@ -120,6 +120,7 @@ export const Profile = () => {
           <div className="mt-4 mb-10">
             <div className="text-xl font-semibold">ひとこと</div>
             <div>{profile?.bio || "未設定"}</div>
+            <div className="divider" />
           </div>
           <div className="mt-4 mb-10">
             <div className="text-xl font-semibold">おすすめスポット</div>
