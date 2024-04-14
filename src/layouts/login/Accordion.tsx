@@ -19,7 +19,7 @@ const Accordion = () => {
           地元の魅力を伝えることも！
         </div>
         <div className="collapse-content">
-          <p>具体的な機能を書く</p>
+          <p>募集部屋に入って地元の魅力を伝えよう！</p>
         </div>
       </div>
       <div className="collapse bg-gray-200">
@@ -28,7 +28,7 @@ const Accordion = () => {
           お店の宣伝等にも！
         </div>
         <div className="collapse-content">
-          <p>具体的な機能を書く</p>
+          <p>旅行客に自分のお店の魅力を伝えよう！</p>
         </div>
       </div>
     </div>
