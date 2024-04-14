@@ -69,12 +69,17 @@ export const RoomList: React.FC = () => {
 
   return (
     <>
-      <div className="text-3xl font-bold text-center my-1">Room List</div>
-      <h2 className="text-xl font-semibold text-center my-10">
-        {userLocation} Rooms
+      <div className="text-2xl font-bold text-center my-5">募集中の部屋</div>
+      <h2 className="text-lg font-semibold text-center my-10">
+        {userLocation} の 部屋
       </h2>
       <div className="flex justify-center">
         <ul className="space-y-4">
+          {filteredChatRooms.length === 0 && (
+            <div className="text-center text-base font-semibold ">
+              現在募集中の部屋はありません
+            </div>
+          )}
           {filteredChatRooms.map((room: any) => (
             <li key={room.ChatRoomID}>
               <div className="card w-96 bg-base-100 shadow-md rounded-lg">

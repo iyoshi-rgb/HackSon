@@ -51,10 +51,7 @@ export const MyRoomList = () => {
   console.log("chatRoomDetails", chatRoomDetails);
   return (
     <>
-      <div className="text-3xl font-bold text-center my-1">Room List</div>
-      <h2 className="text-xl font-semibold text-center my-10">
-        参加済みの部屋
-      </h2>
+      <h2 className="text-2xl font-bold text-center my-10">参加済みの部屋</h2>
       <div className="flex justify-center my-5">
         <ul className="space-y-4">
           {chatRoomDetails.map((room) => (
