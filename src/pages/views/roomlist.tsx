@@ -48,15 +48,15 @@ export const Roomlist = () => {
             .filter((room) => room !== null)
             .map((room) => (room ? room.Title : ""));
           setChatRoomNames(roomNames);
-          console.log("roomName", roomNames);
+          // console.log("roomName", roomNames);
         }
         if (myRooms) {
           setMyChatRooms(myRooms);
-          console.log("myRooms", myRooms);
+          // console.log("myRooms", myRooms);
         }
         if (roomsByLocation) {
           setChatRoomsByLocation(roomsByLocation);
-          console.log("roomsByLocation", roomsByLocation);
+          // console.log("roomsByLocation", roomsByLocation);
         }
       }
     };

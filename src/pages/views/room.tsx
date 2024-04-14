@@ -64,7 +64,7 @@ export const Room = () => {
     e.preventDefault(); // フォームのデフォルト送信動作を防止
 
     const message = e.target.elements.messageInput.value; // inputのname属性を使用して値にアクセス
-    console.log(message); // ここでメッセージを処理（例えばサーバーに送信）
+    console.log(message);
     if (ChatRoomID) {
       const result = await makemessage(user.id, message, Number(ChatRoomID));
       console.log(result);
@@ -74,9 +74,9 @@ export const Room = () => {
     }
   };
   const handleSelectUserId = (userId: string) => {
-    console.log("Selected UserID:", userId);
+    // console.log("Selected UserID:", userId);
     setReceiverUserID(userId);
-    navigate(`/chat`);
+    navigate(`/chat?userID=${userId}`);
   };
 
   return (
@@ -84,7 +84,6 @@ export const Room = () => {
       <div className="flex flex-col items-center w-full">
         <div className="text-2xl font-bold text-center my-4">Room</div>
         {message.map((mes: any, index: number) => (
-          // eslint-disable-next-line eqeqeq
           <div
             className={`chat ${
               user.id === mes.UserID ? "chat-end" : "chat-start"
@@ -115,12 +114,12 @@ export const Room = () => {
             <ul className="space-y-4">
               {joinUsersProfiles &&
                 joinUsersProfiles.map((profile) => (
-                  <li key={profile.UserID}>
+                  <li key={profile.UserId}>
                     <div className="card w-96 bg-base-100 shadow-md rounded-lg">
                       <div className="card-body">
                         <h3
                           className="card-title text-base cursor-pointer"
-                          onClick={() => handleSelectUserId(profile.UserID)}
+                          onClick={() => handleSelectUserId(profile.UserId)}
                         >
                           {profile.UserName ? profile.UserName : profile.UserId}
                         </h3>
