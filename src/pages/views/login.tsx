@@ -33,10 +33,14 @@ export const Login = () => {
       <div className="mt-10">
         <Top />
       </div>
+      {!isLoggedIn && (
+        <div className="my-5">
+          <GoogleButton handleClickMethod={handleSocialLogin} />
+        </div>
+      )}
       <div className="my-5">
-        <GoogleButton handleClickMethod={handleSocialLogin} />
+        <Accordion />
       </div>
-      <Accordion />
     </div>
   );
 };

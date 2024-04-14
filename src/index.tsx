@@ -27,7 +27,6 @@ root.render(
             <Header />
             <Routes>
               <Route path="/" element={<Login />} />
-              <Route path="/login" element={<Login />} />
               <Route path="makeroom" element={<Makeroom />} />
               <Route path="/room" element={<Room />} />
               <Route path="/roomlist" element={<Roomlist />} />
