@@ -86,8 +86,8 @@ export const Profile = () => {
         }
         onUpdate={handleUpdateProfile}
       />
-      <div className="card flex bg-neutral text-neutral-content  shadow-xl">
-      <div className="w-full h-24 bg-slate-400 flex">
+      <div className="card w-4/5 bg-neutral text-neutral-content mx-auto shadow-xl">
+      <div className="w-full h-30 bg-slate-400 flex">
         <button onClick={handleLogout} className="btn btn-neutral">
           ログアウト
         </button>
@@ -98,15 +98,15 @@ export const Profile = () => {
             ))
           ) : (
             <img
-              className="w-30 mr-4 rounded-full"
+              className="w-50 mr-4 rounded-full"
               src={Array.isArray(profile?.userImage) ? profile?.userImage[0] : profile?.userImage || "default.png"}
               alt="画像"
             />
           )}
           <div className="flex flex-col">
-            <div className="text-xl font-medium">{userName}</div>
+            <div className="text-xl text-slate-700 font-medium">{userName}</div>
             <div>
-              <div>地元：{profile?.location || "未設定"}</div>
+              <div className="text-xl text-slate-700 font-medium">地元：{profile?.location || "未設定"}</div>
             </div>
           </div>
           <button onClick={() => setShowModal(true)} className="mt-2 mx-4 btn btn-active">
