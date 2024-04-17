@@ -1,9 +1,18 @@
 import React from "react";
+import { Top } from "./layouts/App/top";
+import Accordion from "./layouts/App/Accordion";
 
 function App() {
   return (
     <>
-      <p className="text-red-300">Hello</p>
+      <div className="text-center">
+        <div className="mt-10">
+          <Top />
+        </div>
+        <div className="my-5">
+          <Accordion />
+        </div>
+      </div>
     </>
   );
 }

@@ -39,7 +39,7 @@ export async function getUser() {
   if (user) {
     return user.id;
   } else {
-    return "No User";
+    return ;
   }
 }
 
@@ -57,3 +57,9 @@ export async function getProfile(userId: string) {
   }
   return profile;
 }
+
+
+
+
+//
+

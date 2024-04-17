@@ -41,7 +41,7 @@ export const GoogleButton = ({ handleClickMethod }: Props) => {
             </svg>
           </div>
           <span className="gsi-material-button-contents">
-            Sign in with Google
+            Sign in & Login with Google
           </span>
           <span style={{ display: "none" }}>Sign in with Google</span>
         </div>

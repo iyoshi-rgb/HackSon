@@ -1,20 +1,30 @@
-import React, { useContext } from "react";
-import { GoogleButton } from "../components/GoogleButton";
-import { handleSocialLogin } from "../utils/login";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../hooks/AuthProvider";
-import { Logout } from "../utils/logout";
+import { AuthContext } from "../../hooks/AuthProvider";
+import { Logout } from "../../utils/logout";
 import { CircleUserRound } from "lucide-react";
 import { MessageSquareText, NotebookText, NotebookPen } from "lucide-react";
+import { GoogleButton } from "../GoogleButton";
+import { getUser, handleSocialLogin } from "../../utils/login";
 
 export const Header = () => {
-  // useContext から isLoggedIn と setIsLoggedIn を正しく取得
   const { isLoggedIn, setIsLoggedIn } = useContext(AuthContext);
+
+  useEffect(() => {
+    const Auth = async () => {
+      const result = await getUser();
+      if (result !== undefined) {
+        setIsLoggedIn(true);
+      }
+    };
+
+    Auth();
+  });
 
   // ログアウト処理
   const handleLogout = async () => {
     await Logout();
-    setIsLoggedIn(false); // ログイン状態をfalseに設定
+    setIsLoggedIn(false);
   };
 
   return (
@@ -48,26 +58,6 @@ export const Header = () => {
 
           <div className="flex-1 items-center  hidden lg:flex">
             <nav className="flex-1 flex gap-5">
-              {/* <Link
-                to="/"
-                className="inline-flex items-center gap-1 pl-5 hover:text-blue-700 active:text-blue-700"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="35"
-                  height="35"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="lucide lucide-home"
-                >
-                  <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
-                  <polyline points="9 22 9 12 15 12 15 22" />
-                </svg>
-              </Link> */}
               <Link
                 to={"/roomlist"}
                 className="inline-flex items-center gap-1 text-sm font-semibold mx-2 hover:text-blue-700 active:text-indigo-700"
@@ -97,44 +87,10 @@ export const Header = () => {
                   ログアウト
                 </button>
               ) : (
-                <GoogleButton handleClickMethod={handleSocialLogin} />
+                <>
+                  <GoogleButton handleClickMethod={handleSocialLogin} />
+                </>
               )}
-              <details className="dropdown">
-                <summary className="m-1 btn mr-10">
-                  <svg
-                    className="swap-off fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 512 512"
-                  >
-                    <path d="M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z" />
-                  </svg>
-                </summary>
-                <ul className="dropdown-content z-[1] menu p-2 font-semibold shadow bg-base-100 rounded-box ">
-                  <Link to={"/profile"} className="flex flex-row items-center">
-                    <CircleUserRound />
-                    <li className="p-2">マイページ</li>
-                  </Link>
-                  <Link to={"/roomlist"} className="flex flex-row items-center">
-                    <NotebookText />
-                    <li className="p-2">参加した部屋</li>
-                  </Link>
-                  <Link
-                    to={"/createdroom"}
-                    className="flex flex-row items-center"
-                  >
-                    <NotebookPen />
-                    <li className="p-2">作成した部屋</li>
-                  </Link>
-                  {isLoggedIn && (
-                    <Link to={"/chat"} className="flex flex-row items-center">
-                      <MessageSquareText />
-                      <li className="p-2">チャット</li>
-                    </Link>
-                  )}
-                </ul>
-              </details>
             </div>
           </div>
 
